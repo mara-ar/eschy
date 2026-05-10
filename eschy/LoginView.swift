@@ -12,7 +12,7 @@ struct LoginView: View {
         VStack {
             VStack {
                 Text("Button")
-                    .font(Font.system(size: 50, weight: .regular))
+                    .font(Font.outfit(size: 50))
             }
         }
         .padding()
