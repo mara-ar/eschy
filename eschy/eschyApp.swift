@@ -12,6 +12,14 @@ struct eschyApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .font(.custom("Outfit", size: 17))
+                .preferredColorScheme(.light)
         }
+    }
+}
+
+extension Font {
+    public static func system(size: CGFloat) -> Font {
+        return Font.custom("Outfit", size: size)
     }
 }
