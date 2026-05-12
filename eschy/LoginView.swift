@@ -81,6 +81,7 @@ struct LoginView: View {
                     }
                     
                     Button {
+                        // TODO: vanilla sign in
                         print("sign in button")
                     } label: {
                         Text("Login")
@@ -110,39 +111,53 @@ struct LoginView: View {
                     
                     HStack {
                         Spacer()
-                        Image("google-logo")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 25)
-                            .background(
-                                RoundedRectangle(cornerRadius: 12)
-                                    .fill(.clear)
-                                    .stroke(.gray3, lineWidth: 1)
-                                    .frame(width: 50, height: 50)
-                            )
+                        Button {
+                            // TODO: google sign in
+                            print("signing in with google")
+                        } label: {
+                            Image("google-logo")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 25)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .fill(.clear)
+                                        .stroke(.gray3, lineWidth: 1)
+                                        .frame(width: 50, height: 50)
+                                )
+                        }
                         Spacer()
-                        Image("apple-logo")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 25)
-                            .background(
-                                RoundedRectangle(cornerRadius: 12)
-                                    .fill(.clear)
-                                    .stroke(.gray3, lineWidth: 1)
-                                    .frame(width: 50, height: 50)
-                            )
+                        Button {
+                            // TODO: apple sign in
+                            print("sign in with apple")
+                        } label: {
+                            Image("apple-logo")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 25)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .fill(.clear)
+                                        .stroke(.gray3, lineWidth: 1)
+                                        .frame(width: 50, height: 50)
+                                )
+                        }
                         Spacer()
-                        Image("x-logo")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 25)
-                            .background(
-                                RoundedRectangle(cornerRadius: 12)
-                                    .fill(.clear)
-                                    .stroke(.gray3, lineWidth: 1)
-                                    .frame(width: 50, height: 50)
-                            )
-                        
+                        Button {
+                            // TODO: x sign in
+                            print("sign in with x")
+                        } label: {
+                            Image("x-logo")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 25)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .fill(.clear)
+                                        .stroke(.gray3, lineWidth: 1)
+                                        .frame(width: 50, height: 50)
+                                )
+                        }
                         Spacer()
                     }
                     
@@ -154,6 +169,7 @@ struct LoginView: View {
                             .fontWeight(.light)
                             .foregroundStyle(.gray1)
                         Button {
+                            // TODO: implement going to sign in page
                             print("go to sign up page")
                         } label: {
                             Text("Sign up here")
