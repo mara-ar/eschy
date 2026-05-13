@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		EF42A0912FB4920C007AC67A /* ClerkKit in Frameworks */ = {isa = PBXBuildFile; productRef = EF42A0902FB4920C007AC67A /* ClerkKit */; };
+		EF42A0932FB4920C007AC67A /* ClerkKitUI in Frameworks */ = {isa = PBXBuildFile; productRef = EF42A0922FB4920C007AC67A /* ClerkKitUI */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		EFB1A6AE2FB0FACF0083887D /* eschy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = eschy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -36,6 +41,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF42A0912FB4920C007AC67A /* ClerkKit in Frameworks */,
+				EF42A0932FB4920C007AC67A /* ClerkKitUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +85,8 @@
 			);
 			name = eschy;
 			packageProductDependencies = (
+				EF42A0902FB4920C007AC67A /* ClerkKit */,
+				EF42A0922FB4920C007AC67A /* ClerkKitUI */,
 			);
 			productName = eschy;
 			productReference = EFB1A6AE2FB0FACF0083887D /* eschy.app */;
@@ -107,6 +116,9 @@
 			);
 			mainGroup = EFB1A6A52FB0FACF0083887D;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				EF42A08F2FB4920C007AC67A /* XCRemoteSwiftPackageReference "clerk-ios" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = EFB1A6AF2FB0FACF0083887D /* Products */;
 			projectDirPath = "";
@@ -264,6 +276,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = eschy/eschy.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = K89D3XB9AF;
@@ -297,6 +310,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = eschy/eschy.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = K89D3XB9AF;
@@ -347,6 +361,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		EF42A08F2FB4920C007AC67A /* XCRemoteSwiftPackageReference "clerk-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/clerk/clerk-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		EF42A0902FB4920C007AC67A /* ClerkKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EF42A08F2FB4920C007AC67A /* XCRemoteSwiftPackageReference "clerk-ios" */;
+			productName = ClerkKit;
+		};
+		EF42A0922FB4920C007AC67A /* ClerkKitUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EF42A08F2FB4920C007AC67A /* XCRemoteSwiftPackageReference "clerk-ios" */;
+			productName = ClerkKitUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = EFB1A6A62FB0FACF0083887D /* Project object */;
 }

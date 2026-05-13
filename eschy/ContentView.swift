@@ -6,13 +6,21 @@
 //
 
 import SwiftUI
+import ClerkKit
 
 struct ContentView: View {
+    @Environment(Clerk.self) private var clerk
+    
     var body: some View {
-        LoginView()
+        if let _ = clerk.session {
+            HomeView()
+        } else {
+            LoginView()
+        }
     }
 }
 
 #Preview {
     ContentView()
+        .environment(Clerk.shared)
 }
