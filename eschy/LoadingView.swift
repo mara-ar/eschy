@@ -26,10 +26,10 @@ struct LoadingView: View {
                     isAnimating = true
                 }
             
-            Text("Loading")
-                .font(.outfit(size: 24))
-                .fontWeight(.regular)
-                .foregroundStyle(.primaryGreen)
+//            Text("Loading")
+//                .font(.outfit(size: 24))
+//                .fontWeight(.regular)
+//                .foregroundStyle(.primaryGreen)
         }
     }
 }

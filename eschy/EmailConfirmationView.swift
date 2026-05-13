@@ -18,6 +18,7 @@ struct EmailConfirmationView: View {
     @State private var char6: String = ""
     
     @State private var deletePressed: Bool = false
+    @State private var verifying: Bool = false
     
     enum Field: Hashable {
         case char1
@@ -49,6 +50,7 @@ struct EmailConfirmationView: View {
                 
                 HStack {
                     TextField("", text: $char1)
+                        .textContentType(nil)
                         .focused($focusedField, equals: .char1)
                         .multilineTextAlignment(.center)
                         .padding(.vertical)
@@ -78,6 +80,7 @@ struct EmailConfirmationView: View {
                         }
                         .keyboardType(.numberPad)
                     TextField("", text: $char2)
+                        .textContentType(nil)
                         .focused($focusedField, equals: .char2)
                         .multilineTextAlignment(.center)
                         .padding(.vertical)
@@ -108,6 +111,7 @@ struct EmailConfirmationView: View {
                         }
                         .keyboardType(.numberPad)
                     TextField("", text: $char3)
+                        .textContentType(nil)
                         .focused($focusedField, equals: .char3)
                         .multilineTextAlignment(.center)
                         .padding(.vertical)
@@ -138,6 +142,7 @@ struct EmailConfirmationView: View {
                         }
                         .keyboardType(.numberPad)
                     TextField("", text: $char4)
+                        .textContentType(nil)
                         .focused($focusedField, equals: .char4)
                         .multilineTextAlignment(.center)
                         .padding(.vertical)
@@ -168,6 +173,7 @@ struct EmailConfirmationView: View {
                         }
                         .keyboardType(.numberPad)
                     TextField("", text: $char5)
+                        .textContentType(nil)
                         .focused($focusedField, equals: .char5)
                         .multilineTextAlignment(.center)
                         .padding(.vertical)
@@ -198,6 +204,7 @@ struct EmailConfirmationView: View {
                         }
                         .keyboardType(.numberPad)
                     TextField("", text: $char6)
+                        .textContentType(nil)
                         .focused($focusedField, equals: .char6)
                         .multilineTextAlignment(.center)
                         .padding(.vertical)
@@ -221,10 +228,23 @@ struct EmailConfirmationView: View {
                             char6 = press.characters
                             // TODO: verify passcode
                             print("code: \(char1+char2+char3+char4+char5+char6)")
+                            verifying = true
+                            focusedField = nil
                             return .handled
                         }
                         .keyboardType(.numberPad)
                 }
+            }
+        }
+        .blur(radius: verifying ? 10 : 0)
+        .overlay {
+            if verifying {
+                LoadingView()
+                    .task {
+                        try? await Task.sleep(nanoseconds: 2_000_000_000)
+                        verifying = false
+                        focusedField = .char6
+                    }
             }
         }
     }
