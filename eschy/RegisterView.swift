@@ -6,12 +6,19 @@
 //
 
 import SwiftUI
+import ClerkKit
 
 struct RegisterView: View {
+    @Environment(Clerk.self) private var clerk
+    @EnvironmentObject private var router: Router
+    
     @State private var username: String = ""
     @State private var email: String = ""
     @State private var password1: String = ""
     @State private var password2: String = ""
+    
+    @State private var loading: Bool = false
+    
     var body: some View {
         ZStack {
             Rectangle()
@@ -72,7 +79,7 @@ struct RegisterView: View {
                                 .padding(.leading, 12)
                                 .padding(.top, 5)
                         }
-                    TextField("", text: $password1)
+                    SecureField("", text: $password1)
                         .autocorrectionDisabled()
                         .textInputAutocapitalization(.never)
                         .padding(.top, 20)
@@ -92,7 +99,7 @@ struct RegisterView: View {
                                 .padding(.leading, 12)
                                 .padding(.top, 5)
                         }
-                    TextField("", text: $password2)
+                    SecureField("", text: $password2)
                         .autocorrectionDisabled()
                         .textInputAutocapitalization(.never)
                         .padding(.top, 20)
@@ -116,6 +123,25 @@ struct RegisterView: View {
                 Button {
                     // TODO: create a new user
                     print("register button")
+                    
+                    Task {
+                        do {
+                            if password1 == password2 {
+                                var signUp = try await clerk.auth.signUp(emailAddress: email, password: password1, username: username)
+                                
+                                print("\(signUp)")
+                                
+                                if let emailAddress = signUp.emailAddress {
+                                    loading = true
+                                    try await signUp.sendEmailCode()
+                                    loading = false
+                                    router.push(to: .emailVerification)
+                                }
+                            }
+                        } catch {
+                            print("\(error)")
+                        }
+                    }
                 } label: {
                     Text("Register")
                         .font(.outfit(size: 14))
@@ -132,9 +158,16 @@ struct RegisterView: View {
             }
             .padding()
         }
+        .blur(radius: loading ? 10 : 0)
+        .overlay {
+            if loading {
+                LoadingView()
+            }
+        }
     }
 }
 
 #Preview {
     RegisterView()
+        .environment(Clerk.preview())
 }

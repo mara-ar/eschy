@@ -6,9 +6,11 @@
 //
 
 import SwiftUI
+import ClerkKit
 
 struct EmailConfirmationView: View {
-    var email: String
+    @Environment(Clerk.self) private var clerk
+    @EnvironmentObject private var router: Router
     
     @State private var char1: String = ""
     @State private var char2: String = ""
@@ -42,7 +44,7 @@ struct EmailConfirmationView: View {
                 Text("Enter the passcode sent to ")
                     .font(.outfit(size: 16))
                     .multilineTextAlignment(.center)
-                Text("\(email)")
+                Text("\(clerk.auth.currentSignUp?.emailAddress ?? "No email provided")")
                     .font(Font.outfit(size: 16))
                     .fontWeight(.medium)
                     .foregroundStyle(.primaryGreen)
@@ -226,30 +228,49 @@ struct EmailConfirmationView: View {
                         .onKeyPress(characters: .decimalDigits, phases: .down) { press in
                             print("key pressed: \(press.characters)")
                             char6 = press.characters
-                            // TODO: verify passcode
-                            print("code: \(char1+char2+char3+char4+char5+char6)")
-                            verifying = true
-                            focusedField = nil
+                            print("code: \(char1)\(char2)\(char3)\(char4)\(char5)\(char6)")
+//                            verifying = true
+//                            focusedField = nil
                             return .handled
                         }
                         .keyboardType(.numberPad)
                 }
+            }
+            Button {
+                // TODO: verify passcode
+                print("verify code")
+                Task {
+                    verifying = true
+                    var result = try await clerk.auth.currentSignUp?.verifyEmailCode("\(char1)\(char2)\(char3)\(char4)\(char5)\(char6)")
+                    if let result = result {
+                        if result.status == .complete {
+                            router.setPath([.home])
+                        }
+                    }
+                }
+            } label: {
+                Text("Verify")
+                    .font(.outfit(size: 17))
+                    .fontWeight(.semibold)
+                    .foregroundStyle(.white)
+                    .padding(.vertical, 19)
+                    .padding(.horizontal, 38)
+                    .background(
+                        Capsule()
+                            .fill(.primaryGreen)
+                    )
             }
         }
         .blur(radius: verifying ? 10 : 0)
         .overlay {
             if verifying {
                 LoadingView()
-                    .task {
-                        try? await Task.sleep(nanoseconds: 2_000_000_000)
-                        verifying = false
-                        focusedField = .char6
-                    }
             }
         }
     }
 }
 
 #Preview {
-    EmailConfirmationView(email: "abhinavmara02@gmail.com")
+    EmailConfirmationView()
+        .environment(Clerk.preview())
 }

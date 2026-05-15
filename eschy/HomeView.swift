@@ -10,6 +10,7 @@ import ClerkKit
 
 struct HomeView: View {
     @Environment(Clerk.self) private var clerk
+    @EnvironmentObject private var router: Router
     
     var body: some View {
         Text("HomeView")
@@ -17,9 +18,9 @@ struct HomeView: View {
         
         Button {
             print("logging out")
-            
             Task {
                 try await clerk.auth.signOut()
+                router.setPath([.login])
             }
         } label: {
             Text("Log out")

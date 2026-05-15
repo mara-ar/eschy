@@ -10,10 +10,13 @@ import ClerkKit
 
 struct LoginView: View {
     @Environment(Clerk.self) private var clerk
+    @EnvironmentObject private var router: Router
     
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var errorMessage: String = ""
+    
+    @State private var loading: Bool = false
     
     var body: some View {
         ZStack {
@@ -91,7 +94,15 @@ struct LoginView: View {
                         
                         Task {
                             do {
+                                loading = true
                                 var result = try await  clerk.auth.signInWithPassword(identifier: "\(email)", password: "\(password)")
+                                
+                                print(result)
+                                
+                                loading = false
+                                if let _ = clerk.session {
+                                    router.setPath([.home])
+                                }
                             } catch {
                                 print("\(type(of: error))")
                                 let clerkError = error as? ClerkAPIError
@@ -142,7 +153,12 @@ struct LoginView: View {
                         // TODO: google sign in
                         print("signing in with google")
                         Task {
+                            loading = true
                             var result = try await clerk.auth.signInWithOAuth(provider: .google)
+                            loading = false
+                            if let _ = clerk.session {
+                                router.setPath([.home])
+                            }
                         }
                         
                     } label: {
@@ -162,7 +178,12 @@ struct LoginView: View {
                         // TODO: apple sign in
                         print("sign in with apple")
                         Task {
+                            loading = true
                             var result = try await clerk.auth.signUpWithApple()
+                            loading = false
+                            if let _ = clerk.session {
+                                router.setPath([.home])
+                            }
                         }
                     } label: {
                         Image("apple-logo")
@@ -181,7 +202,12 @@ struct LoginView: View {
                         // TODO: discord sign in
                         print("sign in with discord")
                         Task {
+                            loading = true
                             var result = try await clerk.auth.signInWithOAuth(provider: .discord)
+                            loading = false
+                            if let _ = clerk.session {
+                                router.setPath([.home])
+                            }
                         }
                     } label: {
                         Image("discord-logo")
@@ -208,6 +234,8 @@ struct LoginView: View {
                     Button {
                         // TODO: implement going to sign in page
                         print("go to sign up page")
+                        
+                        router.push(to: .register)
                     } label: {
                         Text("Sign up here")
                             .font(.outfit(size: 10))
@@ -218,6 +246,12 @@ struct LoginView: View {
                 }
             }
             .padding(.horizontal, 25)
+        }
+        .blur(radius: loading ? 10 : 0)
+        .overlay {
+            if loading {
+                LoadingView()
+            }
         }
         
     }
