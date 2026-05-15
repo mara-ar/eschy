@@ -6,10 +6,14 @@
 //
 
 import SwiftUI
+import ClerkKit
 
 struct LoginView: View {
+    @Environment(Clerk.self) private var clerk
+    
     @State private var email: String = ""
     @State private var password: String = ""
+    @State private var errorMessage: String = ""
     
     var body: some View {
         ZStack {
@@ -58,7 +62,7 @@ struct LoginView: View {
                                 .padding(.top, 5)
                         }
                     
-                    TextField("", text: $password)
+                    SecureField("", text: $password)
                         .autocorrectionDisabled()
                         .textInputAutocapitalization(.never)
                         .padding(.top, 20)
@@ -80,21 +84,44 @@ struct LoginView: View {
                         }
                 }
                 
-                Button {
-                    // TODO: vanilla sign in
-                    print("sign in button")
-                } label: {
-                    Text("Login")
-                        .font(.outfit(size: 14))
-                        .fontWeight(.semibold)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 19)
-                        .background(
-                            Capsule()
-                                .fill(.primaryGreen)
-                        )
-                        .foregroundStyle(.white)
-                        .contentShape(Capsule())
+                VStack {
+                    Button {
+                        // TODO: vanilla sign in
+                        print("sign in button")
+                        
+                        Task {
+                            do {
+                                var result = try await  clerk.auth.signInWithPassword(identifier: "\(email)", password: "\(password)")
+                            } catch {
+                                print("\(type(of: error))")
+                                let clerkError = error as? ClerkAPIError
+                                errorMessage = clerkError?.message ?? "Unknown error"
+                                errorMessage = errorMessage.replacingOccurrences(of: "Identifier", with: "Email")
+                                errorMessage = errorMessage.replacingOccurrences(of: "identifier", with: "email")
+                            }
+                        }
+                    } label: {
+                        Text("Login")
+                            .font(.outfit(size: 14))
+                            .fontWeight(.semibold)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 19)
+                            .background(
+                                Capsule()
+                                    .fill(.primaryGreen)
+                            )
+                            .foregroundStyle(.white)
+                            .contentShape(Capsule())
+                    }
+                    
+                    if (errorMessage != "") {
+                        Text("\(errorMessage)")
+                            .font(.outfit(size: 10))
+                            .fontWeight(.medium)
+                            .foregroundStyle(.red)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .multilineTextAlignment(.center)
+                    }
                 }
                 
                 HStack {
@@ -114,6 +141,10 @@ struct LoginView: View {
                     Button {
                         // TODO: google sign in
                         print("signing in with google")
+                        Task {
+                            var result = try await clerk.auth.signInWithOAuth(provider: .google)
+                        }
+                        
                     } label: {
                         Image("google-logo")
                             .resizable()
@@ -130,6 +161,9 @@ struct LoginView: View {
                     Button {
                         // TODO: apple sign in
                         print("sign in with apple")
+                        Task {
+                            var result = try await clerk.auth.signUpWithApple()
+                        }
                     } label: {
                         Image("apple-logo")
                             .resizable()
@@ -144,10 +178,13 @@ struct LoginView: View {
                     }
                     Spacer()
                     Button {
-                        // TODO: x sign in
-                        print("sign in with x")
+                        // TODO: discord sign in
+                        print("sign in with discord")
+                        Task {
+                            var result = try await clerk.auth.signInWithOAuth(provider: .discord)
+                        }
                     } label: {
-                        Image("x-logo")
+                        Image("discord-logo")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 25)
@@ -188,4 +225,5 @@ struct LoginView: View {
 
 #Preview {
     LoginView()
+        .environment(Clerk.preview())
 }

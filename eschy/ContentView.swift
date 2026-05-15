@@ -22,5 +22,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
-        .environment(Clerk.shared)
+        .environment(Clerk.preview())
 }
