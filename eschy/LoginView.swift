@@ -7,6 +7,8 @@
 
 import SwiftUI
 import ClerkKit
+import Supabase
+import AuthenticationServices
 
 struct LoginView: View {
     @EnvironmentObject private var router: Router
@@ -16,7 +18,6 @@ struct LoginView: View {
     @State private var errorMessage: String = ""
     
     @State private var loading: Bool = false
-    @State private var googleViewController = GoogleSignInViewController()
     
     var body: some View {
         ZStack {
@@ -25,7 +26,7 @@ struct LoginView: View {
                 .frame(height: 500)
                 .offset(y: -300)
                 .blur(radius: 166)
-            VStack (spacing: 25) {
+            VStack (spacing: 15) {
                 Text("eschy")
                     .font(.outfit(size: 48))
                     .foregroundStyle(.primaryGreen)
@@ -127,60 +128,76 @@ struct LoginView: View {
                         .foregroundStyle(.gray2)
                 }
                 
-                HStack {
-                    Spacer()
+                VStack (spacing: 10) {
                     Button {
                         // TODO: google sign in
                         print("signing in with google")
                         
                         Task {
-                            try await googleViewController.googleSignIn()
+                            try await supabase.auth.signInWithOAuth(provider: .google)
                         }
                     } label: {
-                        Image("google-logo")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 25)
-                            .background(
-                                RoundedRectangle(cornerRadius: 12)
-                                    .fill(.clear)
-                                    .stroke(.gray3, lineWidth: 1)
-                                    .frame(width: 50, height: 50)
-                            )
+                        HStack (spacing: 5) {
+                            Image("google-logo")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 13)
+                                .padding(.top, 0.5)
+                            Text("Continue with Google")
+                        }
+                        .fixedSize(horizontal: false, vertical: true)
+                        .font(.outfit(size: 16))
+                        .foregroundStyle(.gray1)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 40)
+                        .overlay {
+                            Capsule()
+                                .fill(.clear)
+                                .stroke(.gray3, style: StrokeStyle(lineWidth: 2))
+                                .frame(maxWidth: .infinity)
+                        }
                     }
-                    Spacer()
-                    Button {
-                        // TODO: apple sign in
-                        print("sign in with apple")
-                    } label: {
-                        Image("apple-logo")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 25)
-                            .background(
-                                RoundedRectangle(cornerRadius: 12)
-                                    .fill(.clear)
-                                    .stroke(.gray3, lineWidth: 1)
-                                    .frame(width: 50, height: 50)
-                            )
+                    
+                    SignInWithAppleButton(.continue) { request in
+                        // set up request here
+                    } onCompletion: { result  in
+                        // set up result here
                     }
-                    Spacer()
+                    .clipShape(Capsule())
+//                    .fixedSize(horizontal: false, vertical: true)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 40)
+                    
                     Button {
                         // TODO: discord sign in
-                        print("sign in with discord")
+                        print("signing in with discord")
+                        
+                        Task {
+                            try await supabase.auth.signInWithOAuth(provider: .discord)
+                        }
                     } label: {
-                        Image("discord-logo")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 25)
-                            .background(
-                                RoundedRectangle(cornerRadius: 12)
-                                    .fill(.clear)
-                                    .stroke(.gray3, lineWidth: 1)
-                                    .frame(width: 50, height: 50)
-                            )
+                        HStack (spacing: 5) {
+                            Image("discord-logo")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 13)
+                                .padding(.top, 0.5)
+                            Text("Continue with Discord")
+                        }
+                        .fixedSize(horizontal: false, vertical: true)
+                        .font(.outfit(size: 16))
+                        .foregroundStyle(.gray1)
+                        .padding(.vertical, 5)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 40)
+                        .overlay {
+                            Capsule()
+                                .fill(.clear)
+                                .stroke(.gray3, style: StrokeStyle(lineWidth: 2))
+                                .frame(maxWidth: .infinity)
+                        }
                     }
-                    Spacer()
+
                 }
                 
                 Spacer()

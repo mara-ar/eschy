@@ -6,12 +6,12 @@
 //
 
 import SwiftUI
+import AuthenticationServices
+import Supabase
 
 struct HomeView: View {
-    @EnvironmentObject private var router: Router
-    
     var body: some View {
-        Text("HomeView")
+      Text("HomeView")
     }
 }
 
