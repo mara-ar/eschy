@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import GoogleSignIn
 
 @main
 struct eschyApp: App {
@@ -14,6 +15,9 @@ struct eschyApp: App {
             ContentView()
                 .font(.outfit(size: 17))
                 .preferredColorScheme(.light)
+//                .onOpenURL { url in
+//                          GIDSignIn.sharedInstance.handle(url)
+//                        }
         }
     }
 }

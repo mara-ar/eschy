@@ -16,6 +16,7 @@ struct LoginView: View {
     @State private var errorMessage: String = ""
     
     @State private var loading: Bool = false
+    @State private var googleViewController = GoogleSignInViewController()
     
     var body: some View {
         ZStack {
@@ -131,6 +132,10 @@ struct LoginView: View {
                     Button {
                         // TODO: google sign in
                         print("signing in with google")
+                        
+                        Task {
+                            try await googleViewController.googleSignIn()
+                        }
                     } label: {
                         Image("google-logo")
                             .resizable()

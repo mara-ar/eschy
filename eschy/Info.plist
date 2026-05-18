@@ -8,11 +8,27 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string></string>
+			<string>AbhinavMara.eschy</string>
 			<key>CFBundleURLSchemes</key>
-			<array/>
+			<array>
+				<string>com.googleusercontent.apps.938429110874-k96adhncdq2rgo66qrjavil1dji7o13f</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>supabase-auth</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.eschy.auth</string>
+			</array>
 		</dict>
 	</array>
+	<key>GIDClientID</key>
+	<string>938429110874-k96adhncdq2rgo66qrjavil1dji7o13f.apps.googleusercontent.com</string>
+	<key>GIDServerClientID</key>
+	<string>938429110874-j5tl4v824krj0ahu27m564h0fmk40rlt.apps.googleusercontent.com</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Outfit.ttf</string>

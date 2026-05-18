@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Supabase
 
 struct ContentView: View {
     @StateObject private var router = Router()
@@ -27,6 +28,9 @@ struct ContentView: View {
             }
         }
         .environmentObject(router)
+        .task {
+            let user = try? await supabase.auth.user()
+        }
     }
 }
 
