@@ -9,7 +9,6 @@ import SwiftUI
 import ClerkKit
 
 struct LoginView: View {
-    @Environment(Clerk.self) private var clerk
     @EnvironmentObject private var router: Router
     
     @State private var email: String = ""
@@ -91,26 +90,6 @@ struct LoginView: View {
                     Button {
                         // TODO: vanilla sign in
                         print("sign in button")
-                        
-                        Task {
-                            do {
-                                loading = true
-                                var result = try await  clerk.auth.signInWithPassword(identifier: "\(email)", password: "\(password)")
-                                
-                                print(result)
-                                
-                                loading = false
-                                if let _ = clerk.session {
-                                    router.setPath([.home])
-                                }
-                            } catch {
-                                print("\(type(of: error))")
-                                let clerkError = error as? ClerkAPIError
-                                errorMessage = clerkError?.message ?? "Unknown error"
-                                errorMessage = errorMessage.replacingOccurrences(of: "Identifier", with: "Email")
-                                errorMessage = errorMessage.replacingOccurrences(of: "identifier", with: "email")
-                            }
-                        }
                     } label: {
                         Text("Login")
                             .font(.outfit(size: 14))
@@ -152,15 +131,6 @@ struct LoginView: View {
                     Button {
                         // TODO: google sign in
                         print("signing in with google")
-                        Task {
-                            loading = true
-                            var result = try await clerk.auth.signInWithOAuth(provider: .google)
-                            loading = false
-                            if let _ = clerk.session {
-                                router.setPath([.home])
-                            }
-                        }
-                        
                     } label: {
                         Image("google-logo")
                             .resizable()
@@ -177,14 +147,6 @@ struct LoginView: View {
                     Button {
                         // TODO: apple sign in
                         print("sign in with apple")
-                        Task {
-                            loading = true
-                            var result = try await clerk.auth.signUpWithApple()
-                            loading = false
-                            if let _ = clerk.session {
-                                router.setPath([.home])
-                            }
-                        }
                     } label: {
                         Image("apple-logo")
                             .resizable()
@@ -201,14 +163,6 @@ struct LoginView: View {
                     Button {
                         // TODO: discord sign in
                         print("sign in with discord")
-                        Task {
-                            loading = true
-                            var result = try await clerk.auth.signInWithOAuth(provider: .discord)
-                            loading = false
-                            if let _ = clerk.session {
-                                router.setPath([.home])
-                            }
-                        }
                     } label: {
                         Image("discord-logo")
                             .resizable()
@@ -259,5 +213,4 @@ struct LoginView: View {
 
 #Preview {
     LoginView()
-        .environment(Clerk.preview())
 }

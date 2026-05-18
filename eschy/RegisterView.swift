@@ -6,10 +6,8 @@
 //
 
 import SwiftUI
-import ClerkKit
 
 struct RegisterView: View {
-    @Environment(Clerk.self) private var clerk
     @EnvironmentObject private var router: Router
     
     @State private var username: String = ""
@@ -123,25 +121,6 @@ struct RegisterView: View {
                 Button {
                     // TODO: create a new user
                     print("register button")
-                    
-                    Task {
-                        do {
-                            if password1 == password2 {
-                                var signUp = try await clerk.auth.signUp(emailAddress: email, password: password1, username: username)
-                                
-                                print("\(signUp)")
-                                
-                                if let emailAddress = signUp.emailAddress {
-                                    loading = true
-                                    try await signUp.sendEmailCode()
-                                    loading = false
-                                    router.push(to: .emailVerification)
-                                }
-                            }
-                        } catch {
-                            print("\(error)")
-                        }
-                    }
                 } label: {
                     Text("Register")
                         .font(.outfit(size: 14))
@@ -169,5 +148,4 @@ struct RegisterView: View {
 
 #Preview {
     RegisterView()
-        .environment(Clerk.preview())
 }

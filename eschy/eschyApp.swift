@@ -6,19 +6,14 @@
 //
 
 import SwiftUI
-import ClerkKit
 
 @main
 struct eschyApp: App {
-    init() {
-        Clerk.configure(publishableKey: "pk_test_dG9nZXRoZXItZ25hdC01My5jbGVyay5hY2NvdW50cy5kZXYk")
-    }
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .font(.outfit(size: 17))
                 .preferredColorScheme(.light)
-                .environment(Clerk.shared)
         }
     }
 }

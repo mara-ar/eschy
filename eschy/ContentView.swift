@@ -6,21 +6,13 @@
 //
 
 import SwiftUI
-import ClerkKit
 
 struct ContentView: View {
-    @Environment(Clerk.self) private var clerk
     @StateObject private var router = Router()
     
     var body: some View {
         NavigationStack(path: $router.path) {
-            Group {
-                if let _ = clerk.session {
-                    HomeView()
-                } else {
-                    LoginView()
-                }
-            }
+            LoginView()
             .navigationDestination(for: Route.self) { route in
                 switch route {
                 case .login:
@@ -40,5 +32,4 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
-        .environment(Clerk.preview())
 }

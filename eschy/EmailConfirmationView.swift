@@ -6,10 +6,8 @@
 //
 
 import SwiftUI
-import ClerkKit
 
 struct EmailConfirmationView: View {
-    @Environment(Clerk.self) private var clerk
     @EnvironmentObject private var router: Router
     
     @State private var char1: String = ""
@@ -44,11 +42,11 @@ struct EmailConfirmationView: View {
                 Text("Enter the passcode sent to ")
                     .font(.outfit(size: 16))
                     .multilineTextAlignment(.center)
-                Text("\(clerk.auth.currentSignUp?.emailAddress ?? "No email provided")")
-                    .font(Font.outfit(size: 16))
-                    .fontWeight(.medium)
-                    .foregroundStyle(.primaryGreen)
-                    .multilineTextAlignment(.center)
+//                Text("\(clerk.auth.currentSignUp?.emailAddress ?? "No email provided")")
+//                    .font(Font.outfit(size: 16))
+//                    .fontWeight(.medium)
+//                    .foregroundStyle(.primaryGreen)
+//                    .multilineTextAlignment(.center)
                 
                 HStack {
                     TextField("", text: $char1)
@@ -239,15 +237,6 @@ struct EmailConfirmationView: View {
             Button {
                 // TODO: verify passcode
                 print("verify code")
-                Task {
-                    verifying = true
-                    var result = try await clerk.auth.currentSignUp?.verifyEmailCode("\(char1)\(char2)\(char3)\(char4)\(char5)\(char6)")
-                    if let result = result {
-                        if result.status == .complete {
-                            router.setPath([.home])
-                        }
-                    }
-                }
             } label: {
                 Text("Verify")
                     .font(.outfit(size: 17))
@@ -272,5 +261,4 @@ struct EmailConfirmationView: View {
 
 #Preview {
     EmailConfirmationView()
-        .environment(Clerk.preview())
 }
