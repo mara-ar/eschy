@@ -135,6 +135,12 @@ struct LoginView: View {
                         
                         Task {
                             try await supabase.auth.signInWithOAuth(provider: .google)
+                            
+                            let user = try await supabase.auth.user()
+                            
+                            print(user)
+                            
+                            router.setPath([.home])
                         }
                     } label: {
                         HStack (spacing: 5) {
@@ -159,9 +165,22 @@ struct LoginView: View {
                     }
                     
                     SignInWithAppleButton(.continue) { request in
-                        // set up request here
+                        request.requestedScopes = [.email, .fullName]
                     } onCompletion: { result  in
-                        // set up result here
+                        Task {
+                            do {
+                                guard let credential = try result.get().credential as? ASAuthorizationAppleIDCredential else { return }
+                                
+                                guard let idToken = credential.identityToken.flatMap({String(data: $0, encoding: .utf8)})
+                                else {
+                                    return
+                                }
+                                
+                                try await supabase.auth.signInWithIdToken(credentials: .init(provider: .apple, idToken: idToken))
+                                
+                                router.setPath([.home])
+                            }
+                        }
                     }
                     .clipShape(Capsule())
 //                    .fixedSize(horizontal: false, vertical: true)
@@ -174,6 +193,12 @@ struct LoginView: View {
                         
                         Task {
                             try await supabase.auth.signInWithOAuth(provider: .discord)
+                            
+                            let user = try await supabase.auth.user()
+                            
+                            print(user)
+                            
+                            router.setPath([.home])
                         }
                     } label: {
                         HStack (spacing: 5) {

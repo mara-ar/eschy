@@ -25,10 +25,6 @@
 			</array>
 		</dict>
 	</array>
-	<key>GIDClientID</key>
-	<string>938429110874-k96adhncdq2rgo66qrjavil1dji7o13f.apps.googleusercontent.com</string>
-	<key>GIDServerClientID</key>
-	<string>938429110874-j5tl4v824krj0ahu27m564h0fmk40rlt.apps.googleusercontent.com</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Outfit.ttf</string>

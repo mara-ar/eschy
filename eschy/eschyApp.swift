@@ -15,9 +15,6 @@ struct eschyApp: App {
             ContentView()
                 .font(.outfit(size: 17))
                 .preferredColorScheme(.light)
-//                .onOpenURL { url in
-//                          GIDSignIn.sharedInstance.handle(url)
-//                        }
         }
     }
 }
