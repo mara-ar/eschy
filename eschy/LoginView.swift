@@ -91,6 +91,13 @@ struct LoginView: View {
                     Button {
                         // TODO: vanilla sign in
                         print("sign in button")
+                        
+                        Task {
+                            loading = true
+                            let result = try await supabase.auth.signIn(email: email, password: password)
+                            loading = false
+                            router.setPath([.home])
+                        }
                     } label: {
                         Text("Login")
                             .font(.outfit(size: 14))
