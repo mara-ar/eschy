@@ -7,7 +7,6 @@
 
 import Foundation
 import SwiftUI
-import ClerkKit
 internal import Combine
 
 class Router: ObservableObject {
@@ -33,6 +32,6 @@ class Router: ObservableObject {
 enum Route: Hashable {
     case login
     case home
-    case emailVerification
+    case emailVerification(email: String)
     case register
 }

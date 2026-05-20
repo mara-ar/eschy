@@ -23,8 +23,8 @@ struct ContentView: View {
                         HomeView().navigationBarBackButtonHidden()
                     case .register:
                         RegisterView().navigationBarBackButtonHidden()
-                    case .emailVerification:
-                        EmailConfirmationView().navigationBarBackButtonHidden()
+                    case .emailVerification(let email):
+                        EmailConfirmationView(email: email).navigationBarBackButtonHidden()
                     }
                 }
         }

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Supabase
 
 struct RegisterView: View {
     @EnvironmentObject private var router: Router
@@ -121,6 +122,28 @@ struct RegisterView: View {
                 Button {
                     // TODO: create a new user
                     print("register button")
+                    Task {
+                        print("\(email)")
+                        print("\(username)")
+                        print("\(password1)")
+                        print("\(password2)")
+                        if password1 != "" && (password1 == password2) {
+                            loading = true
+                            let result = try await supabase.auth.signUp(
+                                email: email,
+                                password: password1,
+                                data: [
+                                    "username": .string(username)
+                                ],
+                                redirectTo: URL(string: "com.eschy.auth://callback")
+                            )
+                            print(result)
+                            loading = false
+                            print("got here")
+                            router.push(to: .emailVerification(email: email))
+                            print("should be pushed to email verification")
+                        }
+                    }
                 } label: {
                     Text("Register")
                         .font(.outfit(size: 14))

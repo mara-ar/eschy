@@ -6,30 +6,15 @@
 //
 
 import SwiftUI
+import Supabase
 
 struct EmailConfirmationView: View {
+    let email: String
+    
     @EnvironmentObject private var router: Router
-    
-    @State private var char1: String = ""
-    @State private var char2: String = ""
-    @State private var char3: String = ""
-    @State private var char4: String = ""
-    @State private var char5: String = ""
-    @State private var char6: String = ""
-    
-    @State private var deletePressed: Bool = false
     @State private var verifying: Bool = false
-    
-    enum Field: Hashable {
-        case char1
-        case char2
-        case char3
-        case char4
-        case char5
-        case char6
-    }
-    
-    @FocusState private var focusedField: Field?
+    @State private var passcode: String = ""
+    @FocusState private var isFocused: Bool
     
     var body: some View {
         VStack (spacing: 30) {
@@ -42,201 +27,35 @@ struct EmailConfirmationView: View {
                 Text("Enter the passcode sent to ")
                     .font(.outfit(size: 16))
                     .multilineTextAlignment(.center)
-//                Text("\(clerk.auth.currentSignUp?.emailAddress ?? "No email provided")")
-//                    .font(Font.outfit(size: 16))
-//                    .fontWeight(.medium)
-//                    .foregroundStyle(.primaryGreen)
-//                    .multilineTextAlignment(.center)
-                
+                Text("\(email)")
+                    .font(.outfit(size: 16))
+                    .fontWeight(.medium)
+                    .foregroundStyle(.primaryGreen)
+                    .multilineTextAlignment(.center)
                 HStack {
-                    TextField("", text: $char1)
-                        .textContentType(nil)
-                        .focused($focusedField, equals: .char1)
+                    TextField("", text: $passcode)
+                        .font(.outfit(size: 16))
+                        .fontWeight(.medium)
                         .multilineTextAlignment(.center)
-                        .padding(.vertical)
-                        .frame(width: 40)
+                        .padding()
+                        .frame(width: 200)
                         .overlay {
                             RoundedRectangle(cornerRadius: 12)
-                                .stroke(.gray3, lineWidth: 1)
+                                .stroke(.gray3, lineWidth: 2)
                         }
-                        .onChange(of: focusedField, { oldValue, newValue in
-                            if newValue == .char1 {
-                                if deletePressed {
-                                    char1 = ""
-                                    deletePressed = false
-                                }
-                            }
-                        })
-                        .onKeyPress(keys: [.delete], action: { press in
-                            print("delete pressed")
-                            char1 = ""
-                            return .handled
-                        })
-                        .onKeyPress(characters: .decimalDigits, phases: .down) { press in
-                            print("key pressed: \(press.characters)")
-                            char1 = press.characters
-                            focusedField = .char2
-                            return .handled
-                        }
-                        .keyboardType(.numberPad)
-                    TextField("", text: $char2)
-                        .textContentType(nil)
-                        .focused($focusedField, equals: .char2)
-                        .multilineTextAlignment(.center)
-                        .padding(.vertical)
-                        .frame(width: 40)
-                        .overlay {
-                            RoundedRectangle(cornerRadius: 12)
-                                .stroke(.gray3, lineWidth: 1)
-                        }
-                        .onChange(of: focusedField, { oldValue, newValue in
-                            if newValue == .char2 {
-                                if deletePressed {
-                                    char2 = ""
-                                    deletePressed = false
-                                }
-                            }
-                        })
-                        .onKeyPress(keys: [.delete], action: { press in
-                            print("delete pressed")
-                            deletePressed = true
-                            focusedField = .char1
-                            return .handled
-                        })
-                        .onKeyPress(characters: .decimalDigits, phases: .down) { press in
-                            print("key pressed: \(press.characters)")
-                            char2 = press.characters
-                            focusedField = .char3
-                            return .handled
-                        }
-                        .keyboardType(.numberPad)
-                    TextField("", text: $char3)
-                        .textContentType(nil)
-                        .focused($focusedField, equals: .char3)
-                        .multilineTextAlignment(.center)
-                        .padding(.vertical)
-                        .frame(width: 40)
-                        .overlay {
-                            RoundedRectangle(cornerRadius: 12)
-                                .stroke(.gray3, lineWidth: 1)
-                        }
-                        .onChange(of: focusedField, { oldValue, newValue in
-                            if newValue == .char3 {
-                                if deletePressed {
-                                    char3 = ""
-                                    deletePressed = false
-                                }
-                            }
-                        })
-                        .onKeyPress(keys: [.delete], action: { press in
-                            print("delete pressed")
-                            deletePressed = true
-                            focusedField = .char2
-                            return .handled
-                        })
-                        .onKeyPress(characters: .decimalDigits, phases: .down) { press in
-                            print("key pressed: \(press.characters)")
-                            char3 = press.characters
-                            focusedField = .char4
-                            return .handled
-                        }
-                        .keyboardType(.numberPad)
-                    TextField("", text: $char4)
-                        .textContentType(nil)
-                        .focused($focusedField, equals: .char4)
-                        .multilineTextAlignment(.center)
-                        .padding(.vertical)
-                        .frame(width: 40)
-                        .overlay {
-                            RoundedRectangle(cornerRadius: 12)
-                                .stroke(.gray3, lineWidth: 1)
-                        }
-                        .onChange(of: focusedField, { oldValue, newValue in
-                            if newValue == .char4 {
-                                if deletePressed {
-                                    char4 = ""
-                                    deletePressed = false
-                                }
-                            }
-                        })
-                        .onKeyPress(keys: [.delete], action: { press in
-                            print("delete pressed")
-                            deletePressed = true
-                            focusedField = .char3
-                            return .handled
-                        })
-                        .onKeyPress(characters: .decimalDigits, phases: .down) { press in
-                            print("key pressed: \(press.characters)")
-                            char4 = press.characters
-                            focusedField = .char5
-                            return .handled
-                        }
-                        .keyboardType(.numberPad)
-                    TextField("", text: $char5)
-                        .textContentType(nil)
-                        .focused($focusedField, equals: .char5)
-                        .multilineTextAlignment(.center)
-                        .padding(.vertical)
-                        .frame(width: 40)
-                        .overlay {
-                            RoundedRectangle(cornerRadius: 12)
-                                .stroke(.gray3, lineWidth: 1)
-                        }
-                        .onChange(of: focusedField, { oldValue, newValue in
-                            if newValue == .char5 {
-                                if deletePressed {
-                                    char5 = ""
-                                    deletePressed = false
-                                }
-                            }
-                        })
-                        .onKeyPress(keys: [.delete], action: { press in
-                            print("delete pressed")
-                            deletePressed = true
-                            focusedField = .char4
-                            return .handled
-                        })
-                        .onKeyPress(characters: .decimalDigits, phases: .down) { press in
-                            print("key pressed: \(press.characters)")
-                            char5 = press.characters
-                            focusedField = .char6
-                            return .handled
-                        }
-                        .keyboardType(.numberPad)
-                    TextField("", text: $char6)
-                        .textContentType(nil)
-                        .focused($focusedField, equals: .char6)
-                        .multilineTextAlignment(.center)
-                        .padding(.vertical)
-                        .frame(width: 40)
-                        .overlay {
-                            RoundedRectangle(cornerRadius: 12)
-                                .stroke(.gray3, lineWidth: 1)
-                        }
-                        .onKeyPress(keys: [.delete], action: { press in
-                            print("delete pressed")
-                            if char6 == "" {
-                                deletePressed = true
-                                focusedField = .char5
-                            } else {
-                                char6 = ""
-                            }
-                            return .handled
-                        })
-                        .onKeyPress(characters: .decimalDigits, phases: .down) { press in
-                            print("key pressed: \(press.characters)")
-                            char6 = press.characters
-                            print("code: \(char1)\(char2)\(char3)\(char4)\(char5)\(char6)")
-//                            verifying = true
-//                            focusedField = nil
-                            return .handled
-                        }
+                        .focused($isFocused)
                         .keyboardType(.numberPad)
                 }
             }
             Button {
                 // TODO: verify passcode
                 print("verify code")
+                Task {
+                    verifying = true
+                    try await supabase.auth.verifyOTP(email: email, token: "\(passcode)", type: .signup)
+                    verifying = false
+                    router.setPath([.home])
+                }
             } label: {
                 Text("Verify")
                     .font(.outfit(size: 17))
@@ -256,9 +75,13 @@ struct EmailConfirmationView: View {
                 LoadingView()
             }
         }
+        .onAppear {
+            isFocused = true
+        }
+        
     }
 }
 
 #Preview {
-    EmailConfirmationView()
+    EmailConfirmationView(email: "grey.reaper01@gmail.com")
 }

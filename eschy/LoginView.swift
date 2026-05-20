@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import ClerkKit
 import Supabase
 import AuthenticationServices
 
