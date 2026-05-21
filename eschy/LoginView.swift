@@ -140,12 +140,14 @@ struct LoginView: View {
                         print("signing in with google")
                         
                         Task {
+                            loading = true
                             try await supabase.auth.signInWithOAuth(provider: .google)
                             
                             let user = try await supabase.auth.user()
                             
                             print(user)
                             
+                            loading = false
                             router.setPath([.home])
                         }
                     } label: {
@@ -175,6 +177,7 @@ struct LoginView: View {
                     } onCompletion: { result  in
                         Task {
                             do {
+                                loading = true
                                 guard let credential = try result.get().credential as? ASAuthorizationAppleIDCredential else { return }
                                 
                                 guard let idToken = credential.identityToken.flatMap({String(data: $0, encoding: .utf8)})
@@ -184,6 +187,31 @@ struct LoginView: View {
                                 
                                 try await supabase.auth.signInWithIdToken(credentials: .init(provider: .apple, idToken: idToken))
                                 
+                                print(credential.fullName ?? "no value for credential.fullName")
+                                print(credential)
+                                
+                                if let fullName = credential.fullName {
+                                    var nameParts: [String] = []
+                                    if let givenName = fullName.givenName {
+                                        nameParts.append(givenName)
+                                    }
+                                    if let familyName = fullName.familyName {
+                                        nameParts.append(familyName)
+                                    }
+                                    let fullNameString = nameParts.joined(separator: " ")
+                                    
+                                    try await supabase.auth.update(
+                                        user: UserAttributes(
+                                            data: [
+                                                "display_name": .string(fullNameString),
+                                                "avatar_url": ""
+                                            ]
+                                        )
+                                    )
+                                }
+//                                print(result)
+                                
+                                loading = false
                                 router.setPath([.home])
                             }
                         }
@@ -198,12 +226,14 @@ struct LoginView: View {
                         print("signing in with discord")
                         
                         Task {
+                            loading = true
                             try await supabase.auth.signInWithOAuth(provider: .discord)
                             
                             let user = try await supabase.auth.user()
                             
                             print(user)
                             
+                            loading = false
                             router.setPath([.home])
                         }
                     } label: {
