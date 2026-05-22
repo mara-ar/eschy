@@ -204,7 +204,7 @@ struct LoginView: View {
                                         user: UserAttributes(
                                             data: [
                                                 "display_name": .string(fullNameString),
-                                                "avatar_url": ""
+                                                "avatar_url": .string("")
                                             ]
                                         )
                                     )

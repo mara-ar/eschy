@@ -134,7 +134,7 @@ struct RegisterView: View {
                                 password: password1,
                                 data: [
                                     "display_name": .string(username),
-                                    "avatar_url": ""
+                                    "avatar_url": .string("")
                                 ],
                                 redirectTo: URL(string: "com.eschy.auth://callback")
                             )
