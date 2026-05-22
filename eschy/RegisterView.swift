@@ -164,7 +164,7 @@ struct RegisterView: View {
         .blur(radius: loading ? 10 : 0)
         .overlay {
             if loading {
-                LoadingView()
+                LoadingView(spinnerColor: .primaryGreen)
             }
         }
     }

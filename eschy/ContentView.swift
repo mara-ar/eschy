@@ -14,7 +14,7 @@ struct ContentView: View {
     
     var body: some View {
         NavigationStack(path: $router.path) {
-            LoadingView()
+            LoadingView(spinnerColor: .primaryGreen)
                 .navigationDestination(for: Route.self) { route in
                     switch route {
                     case .login:

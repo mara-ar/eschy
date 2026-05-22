@@ -10,71 +10,90 @@ import AuthenticationServices
 import Supabase
 
 struct HomeView: View {
+    @State private var user: User? = nil
+    @State private var avatarUrl: String = ""
+    @State private var username: String = ""
+    
     var body: some View {
         VStack {
-            Text("HomeView")
-                .font(.outfit(size: 17))
-            
-            Button {
-                print("signing out")
-                Task {
-                    try await supabase.auth.signOut()
+            // TODO: profile content
+            HStack (spacing: 11) {
+                if avatarUrl != "" {
+                    AsyncImage(url: URL(string: "\(avatarUrl, default: "")")) { phase in
+                        if let image = phase.image {
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 44)
+                                .mask(Circle())
+                        }
+                        else {
+                            LoadingView(spinnerColor: .white)
+                        }
+                    }
+                    .frame(width: 44, height: 44)
+                } else {
+                    Image(systemName: "person.crop.circle")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 44, height: 44)
+                        .foregroundStyle(.white)
                 }
-            } label: {
-                Text("Log out")
-                    .font(.outfit(size: 14))
-                    .fontWeight(.semibold)
-                    .foregroundStyle(.white)
-                    .clipShape(.capsule)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 19)
-                    .background(
-                        Capsule()
-                            .fill(.primaryGreen)
-                    )
-                    .contentShape(Capsule())
-                
-            }
-            
-            Button {
-                Task {
-                    let session = try await supabase.auth.session
-                    print(session.accessToken)
+                VStack (alignment: .leading) {
+                    Text("Hello")
+                        .font(.outfit(size: 12))
+                        .foregroundStyle(.white)
+                        .frame(alignment: .leading)
+                    Text("\(username)")
+                        .font(.outfit(size: 16))
+                        .fontWeight(.medium)
+                        .foregroundStyle(.white)
+                        .frame(alignment: .leading)
                 }
-            } label: {
-                Text("JWT Token")
-                    .font(.outfit(size: 14))
-                    .fontWeight(.semibold)
-                    .foregroundStyle(.white)
-                    .padding()
-                    .background(
-                        Capsule()
-                            .fill(.primaryGreen)
-                    )
-                    .contentShape(Capsule())
+                .frame(alignment: .leading)
+                Spacer()
             }
-            
-            Button {
-                Task {
-                    let user = try await supabase.auth.user()
-                    print(user)
+            .padding(.vertical, 20)
+            .padding(.horizontal, 16)
+            .frame(alignment: .leading)
+            .frame(maxWidth: .infinity)
+            // TODO: important information
+            ZStack {
+                VStack {
+                    Text("Home Contents")
+                        .font(.outfit(size: 16))
+                    
+                    Button {
+                        Task {
+                            try? await supabase.auth.signOut()
+                        }
+                    } label: {
+                        Text("Log out")
+                            .foregroundStyle(.white)
+                            .font(.outfit(size: 17))
+                            .fontWeight(.semibold)
+                            .padding()
+                            .background(
+                                Capsule()
+                                    .fill(.primaryGreen)
+                            )
+                    }
                 }
-            } label: {
-                Text("User")
-                    .font(.outfit(size: 14))
-                    .fontWeight(.semibold)
-                    .foregroundStyle(.white)
-                    .padding()
-                    .background(
-                        Capsule()
-                            .fill(.primaryGreen)
-                    )
-                    .contentShape(Capsule())
-            }
 
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(
+                RoundedRectangle(cornerRadius: 20)
+                    .fill(.white)
+            )
         }
-        .padding()
-
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(.primaryGreen)
+        .task {
+            user = try? await supabase.auth.user()
+            avatarUrl = "\(user?.userMetadata["avatar_url"], default: "")"
+            username = "\(user?.userMetadata["display_name"], default: "")"
+        }
     }
 }
 

@@ -145,7 +145,15 @@ struct LoginView: View {
                             
                             let user = try await supabase.auth.user()
                             
-                            print(user)
+                            try await supabase.auth.update(
+                                user: UserAttributes(
+                                    data: [
+                                        "display_name": .string("\(user.userMetadata["name"]!)")
+                                    ]
+                                )
+                            )
+                            
+//                            print(user)
                             
                             loading = false
                             router.setPath([.home])
@@ -231,6 +239,14 @@ struct LoginView: View {
                             
                             let user = try await supabase.auth.user()
                             
+                            try await supabase.auth.update(
+                                user: UserAttributes(
+                                    data: [
+                                        "display_name": .string("\(user.userMetadata["full_name"]!)")
+                                    ]
+                                )
+                            )
+                            
                             print(user)
                             
                             loading = false
@@ -287,7 +303,7 @@ struct LoginView: View {
         .blur(radius: loading ? 10 : 0)
         .overlay {
             if loading {
-                LoadingView()
+                LoadingView(spinnerColor: .primaryGreen)
             }
         }
         

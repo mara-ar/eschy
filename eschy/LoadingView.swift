@@ -8,13 +8,15 @@
 import SwiftUI
 
 struct LoadingView: View {
+    let spinnerColor: Color
+    
     @State private var isAnimating: Bool = false
     
     var body: some View {
         VStack {
             Circle()
                 .trim(from: 0.2, to: 0.7)
-                .stroke(.primaryGreen, style: StrokeStyle(lineWidth: 4, lineCap: .round))
+                .stroke(spinnerColor, style: StrokeStyle(lineWidth: 4, lineCap: .round))
                 .frame(width: 25, height: 25)
                 .rotationEffect(Angle(degrees: isAnimating ? 360 : -360))
                 .animation(
@@ -35,5 +37,5 @@ struct LoadingView: View {
 }
 
 #Preview {
-    LoadingView()
+    LoadingView(spinnerColor: .primaryGreen)
 }

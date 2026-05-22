@@ -72,7 +72,7 @@ struct EmailConfirmationView: View {
         .blur(radius: verifying ? 10 : 0)
         .overlay {
             if verifying {
-                LoadingView()
+                LoadingView(spinnerColor: .primaryGreen)
             }
         }
         .onAppear {
