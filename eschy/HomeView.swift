@@ -9,28 +9,14 @@ import SwiftUI
 import AuthenticationServices
 import Supabase
 
-struct HabitResponse: Decodable {
-    let id: UUID
-    let habit: String
-    let relapses: String
-    let icon: String
-    let createdAt: Date
-    let notificationContent: String
-    
-    enum CodingKeys: String, CodingKey {
-        case id
-        case habit
-        case relapses
-        case icon
-        case createdAt = "created_at"
-        case notificationContent = "notification_content"
-    }
-}
 
 struct HomeView: View {
     @State private var user: User? = nil
     @State private var avatarUrl: String = ""
     @State private var username: String = ""
+    @State private var habitsLoaded: Bool = false
+    
+    @State private var habitModel: HabitModel = HabitModel()
     
     var body: some View {
         VStack {
@@ -101,6 +87,18 @@ struct HomeView: View {
 
                     }
                     
+                    if habitsLoaded {
+                        ScrollView {
+                            ForEach(habitModel.habits) {habit in
+                                HabitCardView(habit: habit, streak: 5, mostRecentCheckInStatus: .success, nextReminder: "7:00 PM")
+                            }
+                        }
+                    } else {
+                        LoadingView(spinnerColor: .primaryGreen)
+                    }
+                    
+                    Spacer()
+                    
                     Button {
                         Task {
                             try? await supabase.auth.signOut()
@@ -135,24 +133,8 @@ struct HomeView: View {
             username = "\(user?.userMetadata["display_name"], default: "")"
         }
         .task {
-            do {
-                let response = try? await supabase.from("habits").select("id,habit,relapses,icon,created_at,notification_content").execute()
-                
-                let decoder = JSONDecoder()
-
-                let formatter = DateFormatter()
-                formatter.dateFormat = "yyyy-MM-dd"
-                formatter.locale = Locale(identifier: "en_US_POSIX")
-                formatter.timeZone = TimeZone(secondsFromGMT: 0)
-
-                decoder.dateDecodingStrategy = .formatted(formatter)
-                
-                let habits = try decoder.decode([HabitResponse].self, from: response!.data)
-                print(response)
-                print(habits)
-            } catch {
-                print(error)
-            }
+            await habitModel.fetchHabits()
+            habitsLoaded = true
         }
     }
 }

@@ -247,7 +247,7 @@ struct LoginView: View {
                                 )
                             )
                             
-                            print(user)
+//                            print(user)
                             
                             loading = false
                             router.setPath([.home])
