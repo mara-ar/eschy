@@ -9,6 +9,24 @@ import SwiftUI
 import AuthenticationServices
 import Supabase
 
+struct HabitResponse: Decodable {
+    let id: UUID
+    let habit: String
+    let relapses: String
+    let icon: String
+    let createdAt: Date
+    let notificationContent: String
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case habit
+        case relapses
+        case icon
+        case createdAt = "created_at"
+        case notificationContent = "notification_content"
+    }
+}
+
 struct HomeView: View {
     @State private var user: User? = nil
     @State private var avatarUrl: String = ""
@@ -16,7 +34,6 @@ struct HomeView: View {
     
     var body: some View {
         VStack {
-            // TODO: profile content
             HStack (spacing: 11) {
                 if avatarUrl != "" {
                     AsyncImage(url: URL(string: "\(avatarUrl, default: "")")) { phase in
@@ -60,8 +77,29 @@ struct HomeView: View {
             // TODO: important information
             ZStack {
                 VStack {
-                    Text("Home Contents")
-                        .font(.outfit(size: 16))
+                    HStack {
+                        Text("Active Habits")
+                            .font(.outfit(size: 16))
+                            .fontWeight(.semibold)
+                        Spacer()
+                        Button {
+                            // TODO: implement button
+                            // view vs. dropdown
+                            print("all habits")
+                        } label: {
+                            Text("View All")
+                                .font(.outfit(size: 12))
+                                .fontWeight(.regular)
+                                .foregroundStyle(.black)
+                                .frame(width: 66, height: 30)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 20)
+                                        .fill(.white)
+                                        .stroke(.gray3, lineWidth: 1)
+                                )
+                        }
+
+                    }
                     
                     Button {
                         Task {
@@ -82,6 +120,8 @@ struct HomeView: View {
 
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .padding(.vertical, 20)
+            .padding(.horizontal, 16)
             .background(
                 RoundedRectangle(cornerRadius: 20)
                     .fill(.white)
@@ -93,6 +133,26 @@ struct HomeView: View {
             user = try? await supabase.auth.user()
             avatarUrl = "\(user?.userMetadata["avatar_url"], default: "")"
             username = "\(user?.userMetadata["display_name"], default: "")"
+        }
+        .task {
+            do {
+                let response = try? await supabase.from("habits").select("id,habit,relapses,icon,created_at,notification_content").execute()
+                
+                let decoder = JSONDecoder()
+
+                let formatter = DateFormatter()
+                formatter.dateFormat = "yyyy-MM-dd"
+                formatter.locale = Locale(identifier: "en_US_POSIX")
+                formatter.timeZone = TimeZone(secondsFromGMT: 0)
+
+                decoder.dateDecodingStrategy = .formatted(formatter)
+                
+                let habits = try decoder.decode([HabitResponse].self, from: response!.data)
+                print(response)
+                print(habits)
+            } catch {
+                print(error)
+            }
         }
     }
 }
