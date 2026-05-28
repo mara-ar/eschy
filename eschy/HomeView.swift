@@ -15,8 +15,10 @@ struct HomeView: View {
     @State private var avatarUrl: String = ""
     @State private var username: String = ""
     @State private var habitsLoaded: Bool = false
+    @State private var remindersLoaded: Bool = false
     
     @State private var habitModel: HabitModel = HabitModel()
+    @State private var reminderModel: ReminderModel = ReminderModel()
     
     var body: some View {
         VStack {
@@ -97,6 +99,37 @@ struct HomeView: View {
                         LoadingView(spinnerColor: .primaryGreen)
                     }
                     
+                    HStack {
+                        Text("Today's Reminders")
+                            .font(.outfit(size: 16))
+                            .fontWeight(.semibold)
+                        Spacer()
+                        Button {
+                            // TODO: implement button
+                            // view vs. dropdown
+                            print("all reminders")
+                        } label: {
+                            Text("View All")
+                                .font(.outfit(size: 12))
+                                .fontWeight(.regular)
+                                .foregroundStyle(.black)
+                                .frame(width: 66, height: 30)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 20)
+                                        .fill(.white)
+                                        .stroke(.gray3, lineWidth: 1)
+                                )
+                        }
+                    }
+                    
+                    if remindersLoaded {
+                        ScrollView {
+                            ForEach(reminderModel.reminders) {reminder in
+                                ReminderCardView(reminder: reminder)
+                            }
+                        }
+                    }
+                    
                     Spacer()
                     
                     Button {
@@ -135,6 +168,8 @@ struct HomeView: View {
         .task {
             await habitModel.fetchHabits()
             habitsLoaded = true
+            await reminderModel.fetchReminders()
+            remindersLoaded = true
         }
     }
 }
