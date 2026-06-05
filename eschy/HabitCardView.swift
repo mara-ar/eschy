@@ -8,74 +8,67 @@
 import SwiftUI
 
 struct HabitCardView: View {
-    let habit: Habit
-    let streak: Int
-    let mostRecentCheckInStatus: CheckInStatus
-    let nextReminder: String
+    let habitId: UUID
+    @State private var habitModel: HabitModel = HabitModel()
+    @State private var checkInModel: CheckInModel = CheckInModel()
+    @State private var habit: Habit?
+    @State private var streak: Int?
     
     var body: some View {
-        HStack {
-            Text("\(habit.icon)")
-                .font(.outfit(size: 24))
-                .background(
-                    Circle()
-                        .fill(.iconBackground)
-                        .frame(width: 44, height: 44)
-                )
-                .padding()
-            
-            VStack (alignment: .leading, spacing: 5) {
-                Text("\(habit.habit)")
-                    .font(.outfit(size: 14))
-                    .fontWeight(.medium)
-                
-                HStack (spacing: 4) {
-                    Image("calendar")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 16, height: 16)
-                    
-                    HStack (spacing: 2) {
-                        Text("Streak:")
-                            .font(.outfit(size: 12))
-                            .foregroundStyle(.gray1)
-                        
-                        if (streak != 1) {
-                            Text("\(streak) days")
-                                .font(.outfit(size: 12))
-                                .foregroundStyle(.secondaryOrange)
-                        } else {
-                            Text("\(streak) day")
-                                .font(.outfit(size: 12))
-                                .foregroundStyle(.secondaryOrange)
+        VStack {
+            if let habit = habit {
+                VStack (spacing: 10) {
+                    Text("\(habit.icon)")
+                        .font(.outfit(size: 36))
+                    Text("\(habit.habit)")
+                        .font(.outfit(size: 14))
+                        .fontWeight(.medium)
+                    HStack (spacing: 5) {
+                        Image(systemName: "flame.fill")
+                            .foregroundColor(.red)
+                        if let streak = streak {
+                            Text("\(streak)")
                         }
                     }
+                    .frame(width: 63)
+                    .padding(.vertical, 5)
+                    .background(
+                        Capsule()
+                            .fill(Color.gray.opacity(0.1))
+                    )
+                }
+                .padding(.vertical, 11)
+                .frame(width: 113)
+                .background(
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(.gray3, lineWidth: 1)
+                )
+            }
+        }
+        .task {
+            habit = await habitModel.fetchHabitById(id: habitId)
+            let checkIn = await checkInModel.fetchLatestCheckInByHabitId(habitId: habitId)
+            var relapseDate: Date
+            
+            if let checkIn = checkIn {
+                relapseDate = checkIn.createdAt
+                let today = Date()
+                let differenceInSeconds = today.timeIntervalSince(relapseDate)
+                
+                streak = Int(differenceInSeconds) / (60 * 60 * 24)
+            } else {
+                if let habit = habit {
+                    relapseDate = habit.createdAt
+                    let today = Date()
+                    let differenceInSeconds = today.timeIntervalSince(relapseDate)
+                    
+                    streak = Int(differenceInSeconds) / (60 * 60 * 24)
                 }
             }
-            
-            Spacer()
-            
-            VStack (alignment: .trailing) {
-                CheckInStatusView(status: mostRecentCheckInStatus)
-                
-                Text("Next Reminder: \(nextReminder)")
-                    .font(.outfit(size: 12))
-                    .foregroundStyle(.gray2)
-                
-            }
-            .padding()
         }
-        .frame(maxWidth: .infinity)
-        .frame(height: 64)
-        .background(
-            RoundedRectangle(cornerRadius: 12)
-                .stroke(.gray3, lineWidth: 1)
-        )
     }
 }
 
 #Preview {
-    let habit = Habit(id: UUID(), habit: "computer", icon: "⌨️", createdAt: Date(), notificationContent: "do not falter")
-    let streak = 6
-    HabitCardView(habit: habit, streak: streak, mostRecentCheckInStatus: .success, nextReminder: "10:00 PM")
+    HabitCardView(habitId: UUID())
 }

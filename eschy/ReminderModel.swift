@@ -14,20 +14,11 @@ internal import Combine
     
     func fetchReminders() async {
         do {
-            let response = try? await supabase.from("reminders").select("id,user_id,habit_id,hour,minute,active,label").execute()
+            let response = try? await supabase.from("reminders").select().order("hour").execute()
             
             let decoder = JSONDecoder()
 
-            let formatter = DateFormatter()
-            formatter.dateFormat = "yyyy-MM-dd"
-            formatter.locale = Locale(identifier: "en_US_POSIX")
-            formatter.timeZone = TimeZone(secondsFromGMT: 0)
-
-            decoder.dateDecodingStrategy = .formatted(formatter)
-            
             let reminders = try decoder.decode([Reminder].self, from: response!.data)
-            print(response)
-            print(reminders)
             self.reminders = reminders
         } catch {
             print(error)
@@ -43,6 +34,7 @@ struct Reminder: Decodable, Identifiable {
     let minute: Int
     let label: String
     let active: Bool
+    let checkedIn: Bool
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -52,5 +44,6 @@ struct Reminder: Decodable, Identifiable {
         case minute
         case active
         case label
+        case checkedIn = "checked_in"
     }
 }

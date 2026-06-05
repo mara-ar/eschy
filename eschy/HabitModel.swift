@@ -10,29 +10,53 @@ import Supabase
 internal import Combine
 
 @MainActor class HabitModel: ObservableObject {
-    @Published var habits: [Habit] = []
+    @Published var allHabitIds: [UUID] = []
     
-    func fetchHabits() async {
+    func fetchHabitIds() async {
         do {
-            let response = try? await supabase.from("habits").select("id,habit,icon,created_at,notification_content").execute()
+            let response = try? await supabase.from("habits").select("id").execute()
             
-            let decoder = JSONDecoder()
-
-            let formatter = DateFormatter()
-            formatter.dateFormat = "yyyy-MM-dd"
-            formatter.locale = Locale(identifier: "en_US_POSIX")
-            formatter.timeZone = TimeZone(secondsFromGMT: 0)
-
-            decoder.dateDecodingStrategy = .formatted(formatter)
+//            if let data = response?.data {
+//                if let jsonString = String(data: data, encoding: .utf8) {
+//                    print(jsonString)
+//                } else {
+//                    print("Unable to convert data to a UTF-8 string.")
+//                }
+//            }
             
-            let habits = try decoder.decode([Habit].self, from: response!.data)
-            print(response)
-            print(habits)
-            self.habits = habits
+            let ids = try JSONDecoder().decode([HabitId].self, from: response!.data)
+            self.allHabitIds = ids.map { $0.id }
         } catch {
             print(error)
         }
     }
+    
+    func fetchHabitById(id: UUID) async -> Habit? {
+        do {
+            let response = try? await supabase.from("habits").select().eq("id", value: id).single().execute()
+            
+            let decoder = JSONDecoder()
+            
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd"
+            formatter.locale = Locale(identifier: "en_US_POSIX")
+            formatter.timeZone = TimeZone(secondsFromGMT: 0)
+            
+            decoder.dateDecodingStrategy = .formatted(formatter)
+            
+            let habit = try decoder.decode(Habit.self, from: response!.data)
+            
+            return habit
+        } catch {
+            print(error)
+        }
+        
+        return nil
+    }
+}
+
+struct HabitId: Decodable, Identifiable {
+    let id: UUID
 }
 
 struct Habit: Decodable, Identifiable {

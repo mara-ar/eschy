@@ -70,30 +70,17 @@ struct HomeView: View {
                             .font(.outfit(size: 16))
                             .fontWeight(.semibold)
                         Spacer()
-                        Button {
-                            // TODO: implement button
-                            // view vs. dropdown
-                            print("all habits")
-                        } label: {
-                            Text("View All")
-                                .font(.outfit(size: 12))
-                                .fontWeight(.regular)
-                                .foregroundStyle(.black)
-                                .frame(width: 66, height: 30)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 20)
-                                        .fill(.white)
-                                        .stroke(.gray3, lineWidth: 1)
-                                )
-                        }
 
                     }
                     
                     if habitsLoaded {
-                        ScrollView {
-                            ForEach(habitModel.habits) {habit in
-                                HabitCardView(habit: habit, streak: 5, mostRecentCheckInStatus: .success, nextReminder: "7:00 PM")
+                        ScrollView(.horizontal) {
+                            HStack {
+                                ForEach(habitModel.allHabitIds, id: \.self) { id in
+                                    HabitCardView(habitId: id)
+                                }
                             }
+                            .padding(1)
                         }
                     } else {
                         LoadingView(spinnerColor: .primaryGreen)
@@ -104,29 +91,22 @@ struct HomeView: View {
                             .font(.outfit(size: 16))
                             .fontWeight(.semibold)
                         Spacer()
-                        Button {
-                            // TODO: implement button
-                            // view vs. dropdown
-                            print("all reminders")
-                        } label: {
-                            Text("View All")
-                                .font(.outfit(size: 12))
-                                .fontWeight(.regular)
-                                .foregroundStyle(.black)
-                                .frame(width: 66, height: 30)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 20)
-                                        .fill(.white)
-                                        .stroke(.gray3, lineWidth: 1)
-                                )
-                        }
                     }
                     
                     if remindersLoaded {
                         ScrollView {
-                            ForEach(reminderModel.reminders) {reminder in
-                                ReminderCardView(reminder: reminder)
+                            VStack {
+                                ForEach(reminderModel.reminders) {reminder in
+                                    ReminderCardView(reminder: reminder)
+                                        .padding(.horizontal)
+                                }
                             }
+                            .padding(.vertical)
+                            .background(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .stroke(.gray3, lineWidth: 1)
+                            )
+                            .padding(1)
                         }
                     }
                     
@@ -166,7 +146,7 @@ struct HomeView: View {
             username = "\(user?.userMetadata["display_name"], default: "")"
         }
         .task {
-            await habitModel.fetchHabits()
+            await habitModel.fetchHabitIds()
             habitsLoaded = true
             await reminderModel.fetchReminders()
             remindersLoaded = true
