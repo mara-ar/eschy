@@ -109,24 +109,6 @@ struct HomeView: View {
                             .padding(1)
                         }
                     }
-                    
-                    Spacer()
-                    
-                    Button {
-                        Task {
-                            try? await supabase.auth.signOut()
-                        }
-                    } label: {
-                        Text("Log out")
-                            .foregroundStyle(.white)
-                            .font(.outfit(size: 17))
-                            .fontWeight(.semibold)
-                            .padding()
-                            .background(
-                                Capsule()
-                                    .fill(.primaryGreen)
-                            )
-                    }
                 }
 
             }

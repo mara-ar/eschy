@@ -34,4 +34,6 @@ enum Route: Hashable {
     case home
     case emailVerification(email: String)
     case register
+    case main
+    case insights
 }

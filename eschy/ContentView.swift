@@ -25,6 +25,10 @@ struct ContentView: View {
                         RegisterView().navigationBarBackButtonHidden()
                     case .emailVerification(let email):
                         EmailConfirmationView(email: email).navigationBarBackButtonHidden()
+                    case .main:
+                        MainView().navigationBarBackButtonHidden()
+                    case .insights:
+                        InsightsView().navigationBarBackButtonHidden()
                     }
                 }
         }
@@ -35,7 +39,7 @@ struct ContentView: View {
             transation.disablesAnimations = true
             if user != nil {
                 withTransaction(transation) {
-                    router.setPath([.home])
+                    router.setPath([.main])
                 }
             } else {
                 withTransaction(transation) {
@@ -51,7 +55,7 @@ struct ContentView: View {
                     router.setPath([.login])
                 case .signedIn:
                     print("user signed in")
-                    router.setPath([.home])
+                    router.setPath([.main])
                 default:
                     break
                 }
