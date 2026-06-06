@@ -16,11 +16,21 @@ struct MainView: View {
             Group {
                 if selectedIndex == 0 {
                     HomeView()
+                    Color.black.opacity(active ? 0.5 : 0)
+                        .ignoresSafeArea()
                 } else {
                     InsightsView()
+                    Color.black.opacity(active ? 0.5 : 0)
+                        .ignoresSafeArea()
                 }
+                
+                QuickActionsView()
+                    .offset(y: active ? 300 : 800)
+                    .zIndex(5)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .animation(.easeInOut, value: active)
+            
             
             
             
@@ -49,6 +59,7 @@ struct MainView: View {
             .padding(.bottom, 30)
             .background(Color(.white))
             .border(.gray3, width: 1)
+            .zIndex(6)
             
             Button {
                 print("quick actions")
@@ -68,6 +79,7 @@ struct MainView: View {
                     )
             }
             .offset(y: -32)
+            .zIndex(7)
         }
         .ignoresSafeArea(edges: .bottom)
     }

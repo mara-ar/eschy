@@ -13,29 +13,36 @@ struct QuickCreateHabitView: View {
             Text("Create")
                 .font(.outfit(size: 16))
                 .fontWeight(.semibold)
-            HStack {
-                VStack (alignment: .leading, spacing: 12) {
-                    Text("Habit")
-                        .font(.outfit(size: 14))
-                        .fontWeight(.medium)
-                    Text("Create new habit")
-                        .font(.outfit(size: 12))
-                        .fontWeight(.regular)
-                        .foregroundStyle(.gray1)
+            Button {
+                // TODO: direct to habit onboarding
+                print("create a new habit")
+            } label: {
+                HStack {
+                    VStack (alignment: .leading, spacing: 12) {
+                        Text("Habit")
+                            .font(.outfit(size: 14))
+                            .fontWeight(.medium)
+                            .foregroundStyle(.black)
+                        Text("Create new habit")
+                            .font(.outfit(size: 12))
+                            .fontWeight(.regular)
+                            .foregroundStyle(.gray1)
+                    }
+                    
+                    Spacer()
+                    
+                    Image("file")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 36)
+                        .foregroundStyle(.black)
                 }
-                
-                Spacer()
-                
-                Image("file")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 36)
+                .padding(18)
+                .background(
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(.gray3, lineWidth: 1)
+                )
             }
-            .padding(18)
-            .background(
-                RoundedRectangle(cornerRadius: 12)
-                    .stroke(.gray3, lineWidth: 1)
-            )
         }
         .padding()
     }

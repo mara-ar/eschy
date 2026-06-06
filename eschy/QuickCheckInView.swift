@@ -14,53 +14,69 @@ struct QuickCheckInView: View {
                 .font(.outfit(size: 16))
                 .fontWeight(.semibold)
             VStack (spacing: 12) {
-                HStack {
-                    VStack (alignment: .leading, spacing: 12) {
-                        Text("Log Relapse")
-                            .font(.outfit(size: 14))
-                            .fontWeight(.medium)
-                        Text("Be honest and reset your streak")
-                            .font(.outfit(size: 12))
-                            .fontWeight(.regular)
-                            .foregroundStyle(.gray1)
+                Button {
+                    // TODO: log relapse
+                    print("log relapse action")
+                } label: {
+                    HStack {
+                        VStack (alignment: .leading, spacing: 12) {
+                            Text("Log Relapse")
+                                .font(.outfit(size: 14))
+                                .fontWeight(.medium)
+                                .foregroundStyle(.black)
+                            Text("Be honest and reset your streak")
+                                .font(.outfit(size: 12))
+                                .fontWeight(.regular)
+                                .foregroundStyle(.gray1)
+                        }
+                        
+                        Spacer()
+                        
+                        Image("log-relapse")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 32)
+                            .foregroundStyle(.black)
                     }
-                    
-                    Spacer()
-                    
-                    Image("log-relapse")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 32)
+                    .padding(18)
+                    .background(
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(.gray3, lineWidth: 1)
+                    )
                 }
-                .padding(18)
-                .background(
-                    RoundedRectangle(cornerRadius: 12)
-                        .stroke(.gray3, lineWidth: 1)
-                )
+
                 
-                HStack {
-                    VStack (alignment: .leading, spacing: 12) {
-                        Text("Stay Strong")
-                            .font(.outfit(size: 14))
-                            .fontWeight(.medium)
-                        Text("Pause the urge and stay in control")
-                            .font(.outfit(size: 12))
-                            .fontWeight(.regular)
-                            .foregroundStyle(.gray1)
+                
+                Button {
+                    // TODO: redirect to motivation
+                    print("stay strong action")
+                } label: {
+                    HStack {
+                        VStack (alignment: .leading, spacing: 12) {
+                            Text("Stay Strong")
+                                .font(.outfit(size: 14))
+                                .fontWeight(.medium)
+                                .foregroundStyle(.black)
+                            Text("Pause the urge and stay in control")
+                                .font(.outfit(size: 12))
+                                .fontWeight(.regular)
+                                .foregroundStyle(.gray1)
+                        }
+                        
+                        Spacer()
+                        
+                        Image("stay-strong")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 36)
+                            .foregroundStyle(.black)
                     }
-                    
-                    Spacer()
-                    
-                    Image("stay-strong")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 36)
+                    .padding(18)
+                    .background(
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(.gray3, lineWidth: 1)
+                    )
                 }
-                .padding(18)
-                .background(
-                    RoundedRectangle(cornerRadius: 12)
-                        .stroke(.gray3, lineWidth: 1)
-                )
             }
         }
         .padding()

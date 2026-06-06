@@ -64,16 +64,12 @@ struct HomeView: View {
             .frame(maxWidth: .infinity)
             // TODO: important information
             ZStack {
-                VStack {
-                    HStack {
+                if habitsLoaded && remindersLoaded {
+                    VStack (alignment: .leading) {
                         Text("Active Habits")
                             .font(.outfit(size: 16))
                             .fontWeight(.semibold)
-                        Spacer()
-
-                    }
-                    
-                    if habitsLoaded {
+                        
                         ScrollView(.horizontal) {
                             HStack {
                                 ForEach(habitModel.allHabitIds, id: \.self) { id in
@@ -82,18 +78,9 @@ struct HomeView: View {
                             }
                             .padding(1)
                         }
-                    } else {
-                        LoadingView(spinnerColor: .primaryGreen)
-                    }
-                    
-                    HStack {
                         Text("Today's Reminders")
                             .font(.outfit(size: 16))
                             .fontWeight(.semibold)
-                        Spacer()
-                    }
-                    
-                    if remindersLoaded {
                         ScrollView {
                             VStack {
                                 ForEach(reminderModel.reminders) {reminder in
@@ -109,6 +96,8 @@ struct HomeView: View {
                             .padding(1)
                         }
                     }
+                } else {
+                    LoadingView(spinnerColor: .primaryGreen)
                 }
 
             }
