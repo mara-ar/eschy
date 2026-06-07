@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct LogRelapseView: View {
+    @Binding var activeSheet: ActiveSheet?
     @State private var selection: Habit? = nil
     @State private var entry: String = ""
     @State private var isExpanded: Bool = false
@@ -56,7 +57,7 @@ struct LogRelapseView: View {
                 .padding(10)
                 .background(
                     Capsule()
-                        .fill(.gray3)
+                        .fill(.gray3.opacity(0.5))
                 )
             }
             
@@ -106,18 +107,19 @@ struct LogRelapseView: View {
                     .font(.outfit(size: 16))
                     .focused($focusedField, equals: .text)
                     .frame(alignment: .topLeading)
+                    .lineLimit(50)
             }
             .padding()
             .background(
                 RoundedRectangle(cornerRadius: 12)
                     .stroke(.gray3, lineWidth: 1)
             )
+            
             Spacer()
+            
+            
         }
         .padding()
-        .onTapGesture {
-            focusedField = nil
-        }
         .task {
             await habitModel.fetchHabits()
         }
@@ -135,12 +137,46 @@ struct LogRelapseView: View {
             }
             .sharedBackgroundVisibility(.hidden)
         }
-        .frame(maxHeight: .infinity)
-        .background(
-            RoundedRectangle(cornerRadius: 12)
-                .fill(.white)
-                .stroke(.gray3, lineWidth: 1)
-        )
+        .safeAreaInset(edge: .bottom) {
+            VStack (spacing: 24) {
+                if focusedField != .text {
+                    Button {
+                        // TODO: sent api call to log relapse
+                        print("logging relapse")
+                        activeSheet = nil
+                    } label: {
+                        Text("Save Entry")
+                            .font(.outfit(size: 14))
+                            .fontWeight(.semibold)
+                            .padding(.vertical, 19)
+                            .frame(maxWidth: .infinity)
+                            .foregroundStyle(.white)
+                            .background(
+                                Capsule()
+                                    .fill(.primaryGreen)
+                            )
+                    }
+                }
+                
+                HStack {
+                    Spacer()
+                    Button {
+                        if focusedField == .text {
+                            focusedField = nil
+                        } else {
+                            activeSheet = nil
+                        }
+                    } label: {
+                        Text("\(focusedField == .text ? "Done" : "Cancel")")
+                            .font(.outfit(size: 14))
+                            .fontWeight(.semibold)
+                            .foregroundStyle(focusedField == .text ? .primaryGreen : .gray1)
+                    }
+                    Spacer()
+                }
+            }
+            .padding()
+        }
     }
 }
 
@@ -152,14 +188,7 @@ func convertIntToMonth(month: Int) -> String {
     return String(monthName)
 }
 
-struct ClearToolbarButtonStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .foregroundColor(.blue) // Set your custom text color
-            .opacity(configuration.isPressed ? 0.5 : 1.0) // Maintain standard tap behavior
-    }
-}
-
 #Preview {
-    LogRelapseView()
+    @Previewable @State var activeSheet: ActiveSheet? = .logRelapse
+    LogRelapseView(activeSheet: $activeSheet)
 }

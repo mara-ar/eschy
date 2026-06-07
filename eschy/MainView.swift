@@ -8,8 +8,17 @@
 import SwiftUI
 
 struct MainView: View {
+    @Environment(\.dismiss) private var dismiss
+    
     @State private var selectedIndex: Int = 0
     @State private var showActionIcons: Bool = false
+    @State private var activeSheet: ActiveSheet? = nil
+    
+    
+    
+    func resetActionIcons() {
+        showActionIcons = false
+    }
     
     var body: some View {
         ZStack (alignment: .bottom) {
@@ -63,6 +72,8 @@ struct MainView: View {
             Button {
                 // TODO: open sheet for stay strong view
                 print("go to stay strong")
+                activeSheet = .stayStrong
+                showActionIcons = false
             } label: {
                 VStack {
                     Image("stay-strong")
@@ -88,6 +99,8 @@ struct MainView: View {
             Button {
                 // TODO: open sheet for logging relapse
                 print("go to log relpase")
+                activeSheet = .logRelapse
+                showActionIcons = false
             } label: {
                 VStack {
                     Image("log-relapse")
@@ -113,6 +126,8 @@ struct MainView: View {
             Button {
                 // TODO: open sheet for habit onboarding
                 print("go to habit onboarding")
+                activeSheet = .createHabit
+                showActionIcons = false
             } label: {
                 VStack {
                     Image("file")
@@ -157,8 +172,28 @@ struct MainView: View {
             .zIndex(7)
         }
         .ignoresSafeArea(edges: .bottom)
+        .sheet(item: $activeSheet, onDismiss: resetActionIcons) { sheet in
+            if sheet == .logRelapse {
+                VStack {
+                    LogRelapseView(activeSheet: $activeSheet)
+                }
+                .padding()
+            }
+        }
     }
 }
+
+enum ActiveSheet: Identifiable {
+    case stayStrong, logRelapse, createHabit
+    var id: String {
+        switch self {
+        case .stayStrong: return "Stay Strong"
+        case .logRelapse: return "Log Relapse"
+        case .createHabit: return "Create Habit"
+        }
+    }
+}
+
 
 #Preview {
     MainView()
