@@ -33,9 +33,12 @@ internal import Combine
             
             decoder.dateDecodingStrategy = .iso8601
             
-            let checkIn = try decoder.decode(CheckIn.self, from: response!.data)
+            if let _ = response {
+                let checkIn = try decoder.decode(CheckIn.self, from: response!.data)
+                return checkIn
+            }
             
-            return checkIn
+            return nil
         } catch {
             print(error)
         }
