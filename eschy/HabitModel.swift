@@ -10,11 +10,11 @@ import Supabase
 internal import Combine
 
 @MainActor class HabitModel: ObservableObject {
-    @Published var allHabitIds: [UUID] = []
+    @Published var allHabits: [Habit] = []
     
-    func fetchHabitIds() async {
+    func fetchHabits() async {
         do {
-            let response = try? await supabase.from("habits").select("id").execute()
+            let response = try? await supabase.from("habits").select().execute()
             
 //            if let data = response?.data {
 //                if let jsonString = String(data: data, encoding: .utf8) {
@@ -24,8 +24,17 @@ internal import Combine
 //                }
 //            }
             
-            let ids = try JSONDecoder().decode([HabitId].self, from: response!.data)
-            self.allHabitIds = ids.map { $0.id }
+            let decoder = JSONDecoder()
+            
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd"
+            formatter.locale = Locale(identifier: "en_US_POSIX")
+            formatter.timeZone = TimeZone(secondsFromGMT: 0)
+            
+            decoder.dateDecodingStrategy = .formatted(formatter)
+            
+            let habits = try decoder.decode([Habit].self, from: response!.data)
+            self.allHabits = habits
         } catch {
             print(error)
         }

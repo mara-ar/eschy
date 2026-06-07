@@ -72,8 +72,8 @@ struct HomeView: View {
                         
                         ScrollView(.horizontal) {
                             HStack {
-                                ForEach(habitModel.allHabitIds, id: \.self) { id in
-                                    HabitCardView(habitId: id)
+                                ForEach(habitModel.allHabits, id: \.id) { habit in
+                                    HabitCardView(habit: habit)
                                 }
                             }
                             .padding(1)
@@ -117,7 +117,7 @@ struct HomeView: View {
             username = "\(user?.userMetadata["display_name"], default: "")"
         }
         .task {
-            await habitModel.fetchHabitIds()
+            await habitModel.fetchHabits()
             habitsLoaded = true
             await reminderModel.fetchReminders()
             remindersLoaded = true
