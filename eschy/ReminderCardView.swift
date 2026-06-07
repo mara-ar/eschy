@@ -71,7 +71,7 @@ struct ReminderCardView: View {
             
             Spacer()
             
-            ReminderStatusView(status: .upcoming)
+            ReminderStatusView(status: reminderStatus)
         }
         .task {
             if let habit = await habitModel.fetchHabitById(id: reminder.habitId) {
