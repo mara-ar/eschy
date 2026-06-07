@@ -61,11 +61,14 @@ struct LogRelapseView: View {
                 )
             }
             
-            VStack {
+            VStack (alignment: .leading) {
+                Text("Habit")
+                    .font(.outfit(size: 12))
+                    .foregroundStyle(.gray1)
                 HStack {
-                    Text("Select")
+                    Text("\(selection?.habit ?? "Select a habit")")
                         .font(.outfit(size: 16))
-                        .foregroundStyle(.gray2)
+                        .foregroundStyle(selection == nil ? .gray2 : .black)
                     Spacer()
                     Image(systemName: "chevron.down")
                         .resizable()
@@ -85,19 +88,41 @@ struct LogRelapseView: View {
                     VStack {
                         ForEach(habitModel.allHabits, id: \.id) { habit in
                             HStack {
-                                Text("\(habit.icon) \(habit.habit)")
-                                    .font(.outfit(size: 16))
+                                HStack {
+                                    Text("\(habit.habit)")
+                                }
+                                .font(.outfit(size: 16))
+                                .fontWeight(selection == habit ? .regular : .light)
                                 Spacer()
-                                Image("checkmark")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 20)
+                                if selection == habit {
+                                    Image(systemName: "checkmark")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 10)
+                                        .foregroundStyle(.primaryGreen)
+                                }
+                            }
+                            .contentShape(Rectangle())
+                            .padding(.vertical, 1)
+                            .onTapGesture {
+                                selection = habit
+                                withAnimation(.snappy.delay(0.5)) {
+                                    isExpanded.toggle()
+                                }
                             }
                         }
                     }
+                    .transition(.move(edge: .bottom))
                 }
             }
             .focused($focusedField, equals: .dropdown)
+            .padding()
+            .clipShape(RoundedRectangle(cornerRadius: 12))
+            .background(
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(.white)
+                    .stroke(.gray3, lineWidth: 1)
+            )
             
             VStack (alignment: .leading) {
                 Text("What happened")

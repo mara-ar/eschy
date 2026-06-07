@@ -25,19 +25,12 @@ struct MainView: View {
             Group {
                 if selectedIndex == 0 {
                     HomeView()
-//                    Color.black.opacity(showActionIcons ? 0.5 : 0)
-//                        .ignoresSafeArea()
-                        .overlay {
-                            if showActionIcons {
-                                Rectangle()
-                                    .fill(.ultraThinMaterial)
-                                    .ignoresSafeArea()
-                            }
-                        }
+                        .blur(radius: showActionIcons ? 5 : 0)
+                        .animation(.easeInOut, value: showActionIcons)
                 } else {
                     InsightsView()
-//                    Color.black.opacity(showActionIcons ? 0.5 : 0)
-//                        .ignoresSafeArea()
+                        .blur(radius: showActionIcons ? 5 : 0)
+                        .animation(.easeInOut, value: showActionIcons)
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -178,6 +171,11 @@ struct MainView: View {
                     LogRelapseView(activeSheet: $activeSheet)
                 }
                 .padding()
+            }
+        }
+        .onTapGesture {
+            if showActionIcons {
+                showActionIcons = false
             }
         }
     }
