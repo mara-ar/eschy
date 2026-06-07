@@ -36,4 +36,5 @@ enum Route: Hashable {
     case register
     case main
     case insights
+    case motivation(habitId: UUID)
 }

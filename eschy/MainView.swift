@@ -171,6 +171,14 @@ struct MainView: View {
                     LogRelapseView(activeSheet: $activeSheet)
                 }
                 .padding()
+            } else if sheet == .stayStrong {
+                VStack {
+                    StayStrongView(activeSheet: $activeSheet)
+                }
+                .padding()
+                .presentationDetents([.medium])
+                .presentationBackground(.white)
+                    
             }
         }
         .onTapGesture {
