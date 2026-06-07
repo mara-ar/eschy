@@ -16,24 +16,15 @@ struct MainView: View {
             Group {
                 if selectedIndex == 0 {
                     HomeView()
-                    Color.black.opacity(quickActionsState.active ? 0.5 : 0)
+                    Color.black.opacity(quickActionsState.active || quickActionsState.loggingRelapse ? 0.5 : 0)
                         .ignoresSafeArea()
                 } else {
                     InsightsView()
-                    Color.black.opacity(quickActionsState.active ? 0.5 : 0)
+                    Color.black.opacity(quickActionsState.active || quickActionsState.loggingRelapse ? 0.5 : 0)
                         .ignoresSafeArea()
                 }
-                
-                QuickActionsView()
-                    .offset(y: quickActionsState.active ? (quickActionsState.loggingRelapse ? 0 : 300) : 800)
-                    .zIndex(5)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .animation(.easeInOut, value: quickActionsState.active)
-            .animation(.easeInOut, value: quickActionsState.active)
-            
-            
-            
             
             HStack {
                 Spacer()
@@ -63,13 +54,13 @@ struct MainView: View {
             .zIndex(6)
             
             Button {
+                // TODO: quick actions
                 print("quick actions")
-                quickActionsState.active = !quickActionsState.active
             } label: {
                 Image(systemName: "plus")
                     .resizable()
                     .scaledToFit()
-                    .rotationEffect(Angle(degrees: quickActionsState.active ? 45 : 0))
+                    .rotationEffect(Angle(degrees: quickActionsState.active || quickActionsState.loggingRelapse ? 45 : 0))
                     .frame(width: 17.5)
                     .foregroundStyle(.white)
                     .padding(20)

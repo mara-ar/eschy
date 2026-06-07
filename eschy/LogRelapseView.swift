@@ -102,13 +102,11 @@ struct LogRelapseView: View {
                 Text("What happened")
                     .font(.outfit(size: 12))
                     .foregroundStyle(.gray1)
-                TextEditor(text: $entry)
+                TextField("Journal your experience here...", text: $entry, axis: .vertical)
                     .font(.outfit(size: 16))
-                    .padding(.horizontal, -5)
-                    .padding(.vertical, -8)
                     .focused($focusedField, equals: .text)
+                    .frame(alignment: .topLeading)
             }
-            .frame(height: 125)
             .padding()
             .background(
                 RoundedRectangle(cornerRadius: 12)
@@ -137,6 +135,12 @@ struct LogRelapseView: View {
             }
             .sharedBackgroundVisibility(.hidden)
         }
+        .frame(maxHeight: .infinity)
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(.white)
+                .stroke(.gray3, lineWidth: 1)
+        )
     }
 }
 
