@@ -66,9 +66,21 @@ struct LogRelapseView: View {
                     .font(.outfit(size: 12))
                     .foregroundStyle(.gray1)
                 HStack {
-                    Text("\(selection?.habit ?? "Select a habit")")
-                        .font(.outfit(size: 16))
-                        .foregroundStyle(selection == nil ? .gray2 : .black)
+                    if let selection = selection {
+                        HStack (spacing: 5) {
+                            Text("\(selection.habit)")
+                                .font(.outfit(size: 16))
+                            Circle()
+                                .fill(.gray2)
+                                .frame(width: 4, height: 4)
+                            Text("\(selection.icon)")
+                                .font(.outfit(size: 16))
+                        }
+                    } else {
+                        Text("Select a habit")
+                            .font(.outfit(size: 16))
+                            .foregroundStyle(.gray2)
+                    }
                     Spacer()
                     Image(systemName: "chevron.down")
                         .resizable()
@@ -85,11 +97,17 @@ struct LogRelapseView: View {
                 }
                 
                 if isExpanded {
-                    VStack {
+                    ScrollView {
                         ForEach(habitModel.allHabits, id: \.id) { habit in
                             HStack {
-                                HStack {
+                                HStack (spacing: 5) {
                                     Text("\(habit.habit)")
+                                        .font(.outfit(size: 14))
+                                    Circle()
+                                        .fill(.gray2)
+                                        .frame(width: 4, height: 4)
+                                    Text("\(habit.icon)")
+                                        .font(.outfit(size: 14))
                                 }
                                 .font(.outfit(size: 16))
                                 .fontWeight(selection == habit ? .regular : .light)
@@ -131,7 +149,7 @@ struct LogRelapseView: View {
                 TextField("Journal your experience here...", text: $entry, axis: .vertical)
                     .font(.outfit(size: 16))
                     .focused($focusedField, equals: .text)
-                    .frame(alignment: .topLeading)
+                    .frame(maxHeight: .infinity, alignment: .topLeading)
                     .lineLimit(50)
             }
             .padding()
