@@ -31,6 +31,8 @@ struct ContentView: View {
                         InsightsView().navigationBarBackButtonHidden()
                     case .motivation(let habitId):
                         MotivationView(habitId: habitId)
+                    case .habitOnboarding:
+                        HabitOnboardingView()
                     }
                 }
         }

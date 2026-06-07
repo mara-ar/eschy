@@ -166,19 +166,24 @@ struct MainView: View {
         }
         .ignoresSafeArea(edges: .bottom)
         .sheet(item: $activeSheet, onDismiss: resetActionIcons) { sheet in
-            if sheet == .logRelapse {
+            switch sheet {
+            case .logRelapse:
                 VStack {
                     LogRelapseView(activeSheet: $activeSheet)
                 }
                 .padding()
-            } else if sheet == .stayStrong {
+            case .stayStrong:
                 VStack {
                     StayStrongView(activeSheet: $activeSheet)
                 }
                 .padding()
                 .presentationDetents([.medium])
                 .presentationBackground(.white)
-                    
+            case .createHabit:
+                VStack {
+                    HabitOnboardingView()
+                }
+                .padding()
             }
         }
         .onTapGesture {
