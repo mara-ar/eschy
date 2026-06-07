@@ -9,18 +9,26 @@ import SwiftUI
 
 struct MainView: View {
     @State private var selectedIndex: Int = 0
+    @State private var showActionIcons: Bool = false
     
     var body: some View {
         ZStack (alignment: .bottom) {
             Group {
                 if selectedIndex == 0 {
                     HomeView()
-                    Color.black.opacity(0.5)
-                        .ignoresSafeArea()
+//                    Color.black.opacity(showActionIcons ? 0.5 : 0)
+//                        .ignoresSafeArea()
+                        .overlay {
+                            if showActionIcons {
+                                Rectangle()
+                                    .fill(.ultraThinMaterial)
+                                    .ignoresSafeArea()
+                            }
+                        }
                 } else {
                     InsightsView()
-                    Color.black.opacity(0.5)
-                        .ignoresSafeArea()
+//                    Color.black.opacity(showActionIcons ? 0.5 : 0)
+//                        .ignoresSafeArea()
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -53,13 +61,89 @@ struct MainView: View {
             .zIndex(6)
             
             Button {
+                // TODO: open sheet for stay strong view
+                print("go to stay strong")
+            } label: {
+                VStack {
+                    Image("stay-strong")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 16)
+                        .foregroundStyle(.white)
+                        .padding(10)
+                        .background(
+                            Circle()
+                                .fill(.primaryGreen)
+                        )
+                        .shadow(color: .primaryGreen.opacity(0.5), radius: 8, y: 4)
+                    Text("Resist urges")
+                        .font(.outfit(size: 10))
+                        .foregroundStyle(.primaryGreen)
+                }
+            }
+            .offset(x: showActionIcons ? -75 : 0, y: showActionIcons ? -100 : -32)
+            .opacity(showActionIcons ? 1 : 0)
+            .animation(.spring(bounce: 0.25), value: showActionIcons)
+            
+            Button {
+                // TODO: open sheet for logging relapse
+                print("go to log relpase")
+            } label: {
+                VStack {
+                    Image("log-relapse")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 16)
+                        .foregroundStyle(.white)
+                        .padding(10)
+                        .background(
+                            Circle()
+                                .fill(.primaryGreen)
+                        )
+                        .shadow(color: .primaryGreen.opacity(0.5), radius: 8, y: 4)
+                    Text("Log relapse")
+                        .font(.outfit(size: 10))
+                        .foregroundStyle(.primaryGreen)
+                }
+            }
+            .offset(x: 0, y: showActionIcons ? -150 : -32)
+            .opacity(showActionIcons ? 1 : 0)
+            .animation(.spring(bounce: 0.25), value: showActionIcons)
+            
+            Button {
+                // TODO: open sheet for habit onboarding
+                print("go to habit onboarding")
+            } label: {
+                VStack {
+                    Image("file")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 16)
+                        .foregroundStyle(.white)
+                        .padding(10)
+                        .background(
+                            Circle()
+                                .fill(.primaryGreen)
+                        )
+                        .shadow(color: .primaryGreen.opacity(0.5), radius: 8, y: 4)
+                    Text("Create habit")
+                        .font(.outfit(size: 10))
+                        .foregroundStyle(.primaryGreen)
+                }
+            }
+            .offset(x: showActionIcons ? 75 : 0, y: showActionIcons ? -100 : -32)
+            .opacity(showActionIcons ? 1 : 0)
+            .animation(.spring(bounce: 0.25), value: showActionIcons)
+            
+            Button {
                 // TODO: quick actions
                 print("quick actions")
+                showActionIcons.toggle()
             } label: {
                 Image(systemName: "plus")
                     .resizable()
                     .scaledToFit()
-                    .rotationEffect(Angle(degrees: 0))
+                    .rotationEffect(Angle(degrees: showActionIcons ? 45 : 0))
                     .frame(width: 17.5)
                     .foregroundStyle(.white)
                     .padding(20)
