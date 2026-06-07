@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct MainView: View {
-    @EnvironmentObject var quickActionsState: QuickActionsState
     @State private var selectedIndex: Int = 0
     
     var body: some View {
@@ -16,11 +15,11 @@ struct MainView: View {
             Group {
                 if selectedIndex == 0 {
                     HomeView()
-                    Color.black.opacity(quickActionsState.active || quickActionsState.loggingRelapse ? 0.5 : 0)
+                    Color.black.opacity(0.5)
                         .ignoresSafeArea()
                 } else {
                     InsightsView()
-                    Color.black.opacity(quickActionsState.active || quickActionsState.loggingRelapse ? 0.5 : 0)
+                    Color.black.opacity(0.5)
                         .ignoresSafeArea()
                 }
             }
@@ -60,7 +59,7 @@ struct MainView: View {
                 Image(systemName: "plus")
                     .resizable()
                     .scaledToFit()
-                    .rotationEffect(Angle(degrees: quickActionsState.active || quickActionsState.loggingRelapse ? 45 : 0))
+                    .rotationEffect(Angle(degrees: 0))
                     .frame(width: 17.5)
                     .foregroundStyle(.white)
                     .padding(20)
@@ -78,7 +77,5 @@ struct MainView: View {
 }
 
 #Preview {
-    var appState = QuickActionsState()
     MainView()
-        .environmentObject(appState)
 }

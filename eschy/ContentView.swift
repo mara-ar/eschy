@@ -10,7 +10,6 @@ import Supabase
 
 struct ContentView: View {
     @StateObject private var router = Router()
-    @StateObject private var quickActionsState = QuickActionsState()
     @State private var renderHome: Bool = false
     
     var body: some View {
@@ -34,7 +33,6 @@ struct ContentView: View {
                 }
         }
         .environmentObject(router)
-        .environmentObject(quickActionsState)
         .task {
             let user: User? = try? await supabase.auth.user()
             var transation = Transaction()
