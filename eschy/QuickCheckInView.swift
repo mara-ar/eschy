@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct QuickCheckInView: View {
+    @EnvironmentObject var quickActionsState: QuickActionsState
     var body: some View {
         VStack (alignment: .leading, spacing: 20) {
             Text("Quick Check In")
@@ -17,6 +18,7 @@ struct QuickCheckInView: View {
                 Button {
                     // TODO: log relapse
                     print("log relapse action")
+                    quickActionsState.loggingRelapse.toggle()
                 } label: {
                     HStack {
                         VStack (alignment: .leading, spacing: 12) {

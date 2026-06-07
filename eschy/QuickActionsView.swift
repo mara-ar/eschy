@@ -8,14 +8,23 @@
 import SwiftUI
 
 struct QuickActionsView: View {
+    @EnvironmentObject var quickActionsState: QuickActionsState
     var body: some View {
-        VStack {
-            QuickCheckInView()
-            Divider()
-            QuickCreateHabitView()
-            Spacer()
+        Group {
+            if !quickActionsState.loggingRelapse {
+                VStack {
+                    QuickCheckInView()
+                    Divider()
+                    QuickCreateHabitView()
+                    Spacer()
+                }
+            } else {
+                LogRelapseView()
+            }
         }
         .frame(maxHeight: .infinity)
+        .animation(.easeInOut, value: quickActionsState.active)
+        .animation(.easeInOut, value: quickActionsState.loggingRelapse)
         .background(
             RoundedRectangle(cornerRadius: 12)
                 .fill(.white)

@@ -8,28 +8,29 @@
 import SwiftUI
 
 struct MainView: View {
+    @EnvironmentObject var quickActionsState: QuickActionsState
     @State private var selectedIndex: Int = 0
-    @State private var active: Bool = false
     
     var body: some View {
         ZStack (alignment: .bottom) {
             Group {
                 if selectedIndex == 0 {
                     HomeView()
-                    Color.black.opacity(active ? 0.5 : 0)
+                    Color.black.opacity(quickActionsState.active ? 0.5 : 0)
                         .ignoresSafeArea()
                 } else {
                     InsightsView()
-                    Color.black.opacity(active ? 0.5 : 0)
+                    Color.black.opacity(quickActionsState.active ? 0.5 : 0)
                         .ignoresSafeArea()
                 }
                 
                 QuickActionsView()
-                    .offset(y: active ? 300 : 800)
+                    .offset(y: quickActionsState.active ? (quickActionsState.loggingRelapse ? 0 : 300) : 800)
                     .zIndex(5)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .animation(.easeInOut, value: active)
+            .animation(.easeInOut, value: quickActionsState.active)
+            .animation(.easeInOut, value: quickActionsState.active)
             
             
             
@@ -63,12 +64,12 @@ struct MainView: View {
             
             Button {
                 print("quick actions")
-                active = !active
+                quickActionsState.active = !quickActionsState.active
             } label: {
                 Image(systemName: "plus")
                     .resizable()
                     .scaledToFit()
-                    .rotationEffect(Angle(degrees: active ? 45 : 0))
+                    .rotationEffect(Angle(degrees: quickActionsState.active ? 45 : 0))
                     .frame(width: 17.5)
                     .foregroundStyle(.white)
                     .padding(20)
@@ -86,5 +87,7 @@ struct MainView: View {
 }
 
 #Preview {
+    var appState = QuickActionsState()
     MainView()
+        .environmentObject(appState)
 }
