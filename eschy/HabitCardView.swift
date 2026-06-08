@@ -22,6 +22,8 @@ struct HabitCardView: View {
                 Text("\(habit.habit)")
                     .font(.outfit(size: 14))
                     .fontWeight(.medium)
+                    .lineLimit(1)
+                    .frame(maxWidth: 90)
                 if let streak = streak {
                     HStack (spacing: 5) {
                         Image(systemName: "flame.fill")
@@ -37,7 +39,7 @@ struct HabitCardView: View {
                 }
             }
             .padding(.vertical, 11)
-            .frame(width: 113)
+            .frame(width: 105)
             .background(
                 RoundedRectangle(cornerRadius: 12)
                     .stroke(.gray3, lineWidth: 1)
