@@ -1,15 +1,15 @@
 //
-//  CheckInModel.swift
+//  CheckInViewModel.swift
 //  eschy
 //
-//  Created by Abhinav Mara on 6/6/26.
+//  Created by Abhinav Mara on 6/15/26.
 //
 
 import Foundation
 import Supabase
 internal import Combine
 
-@MainActor class CheckInModel: ObservableObject {
+@MainActor class CheckInViewModel: ObservableObject {
     func fetchLatestCheckInByHabitId(habitId: UUID) async -> CheckIn? {
         do {
             let response = try? await supabase
@@ -46,22 +46,3 @@ internal import Combine
     }
 }
 
-struct CheckIn: Decodable, Identifiable {
-    let id: UUID
-    let userId: UUID
-    let habitId: UUID
-    let reminderId: UUID?
-    let relapsed: Bool
-    let content: String
-    let createdAt: Date
-    
-    enum CodingKeys: String, CodingKey {
-        case id
-        case userId = "user_id"
-        case habitId = "habit_id"
-        case reminderId = "reminder_id"
-        case relapsed
-        case content
-        case createdAt = "created_at"
-    }
-}

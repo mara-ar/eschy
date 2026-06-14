@@ -57,11 +57,7 @@ struct ReminderStatusView: View {
     }
 }
 
-enum ReminderStatus {
-    case completed
-    case missed
-    case upcoming
-}
+
 
 #Preview {
     ReminderStatusView(status: .upcoming)

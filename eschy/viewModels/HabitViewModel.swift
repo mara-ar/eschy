@@ -1,15 +1,15 @@
 //
-//  HabitModel.swift
+//  HabitViewModel.swift
 //  eschy
 //
-//  Created by Abhinav Mara on 5/23/26.
+//  Created by Abhinav Mara on 6/15/26.
 //
 
 import Foundation
 import Supabase
 internal import Combine
 
-@MainActor class HabitModel: ObservableObject {
+@MainActor class HabitViewModel: ObservableObject {
     @Published var allHabits: [Habit] = []
     
     func fetchHabits() async {
@@ -64,28 +64,5 @@ internal import Combine
     }
 }
 
-struct HabitId: Decodable, Identifiable {
-    let id: UUID
-}
 
-struct Habit: Decodable, Identifiable, Equatable {
-    let id: UUID
-    let habit: String
-    let icon: String
-    let createdAt: Date
-    let notificationContent: String
-    
-    enum CodingKeys: String, CodingKey {
-        case id
-        case habit
-        case icon
-        case createdAt = "created_at"
-        case notificationContent = "notification_content"
-    }
-}
 
-enum CheckInStatus: String, Codable {
-    case success
-    case relapse
-    case pending
-}

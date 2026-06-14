@@ -9,9 +9,7 @@ import SwiftUI
 
 struct HabitCardView: View {
     let habit: Habit
-//    @State private var habitModel: HabitModel = HabitModel()
-    @State private var checkInModel: CheckInModel = CheckInModel()
-//    @State private var habit: Habit?
+    @State private var checkInViewModel: CheckInViewModel = CheckInViewModel()
     @State private var streak: Int?
     
     var body: some View {
@@ -46,8 +44,7 @@ struct HabitCardView: View {
             )
         }
         .task {
-//            habit = await habitModel.fetchHabitById(id: habitId)
-            let checkIn = await checkInModel.fetchLatestCheckInByHabitId(habitId: habit.id)
+            let checkIn = await checkInViewModel.fetchLatestCheckInByHabitId(habitId: habit.id)
             var relapseDate: Date
             
             if let checkIn = checkIn {

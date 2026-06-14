@@ -12,7 +12,7 @@ struct StayStrongView: View {
     @EnvironmentObject private var router: Router
     @State private var selection: Habit? = nil
     @State private var isExpanded: Bool = false
-    @State private var habitModel: HabitModel = HabitModel()
+    @State private var habitViewModel: HabitViewModel = HabitViewModel()
     
     var body: some View {
         VStack (alignment: .leading, spacing: 20) {
@@ -62,7 +62,7 @@ struct StayStrongView: View {
                 
                 if isExpanded {
                     ScrollView {
-                        ForEach(habitModel.allHabits, id: \.id) { habit in
+                        ForEach(habitViewModel.allHabits, id: \.id) { habit in
                             HStack {
                                 HStack (spacing: 5) {
                                     Text("\(habit.habit)")
@@ -131,7 +131,7 @@ struct StayStrongView: View {
         }
         .padding()
         .task {
-            await habitModel.fetchHabits()
+            await habitViewModel.fetchHabits()
         }
     }
 }

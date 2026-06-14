@@ -17,8 +17,8 @@ struct HomeView: View {
     @State private var habitsLoaded: Bool = false
     @State private var remindersLoaded: Bool = false
     
-    @State private var habitModel: HabitModel = HabitModel()
-    @State private var reminderModel: ReminderModel = ReminderModel()
+    @State private var habitViewModel: HabitViewModel = HabitViewModel()
+    @State private var reminderViewModel: ReminderViewModel = ReminderViewModel()
     
     var body: some View {
         VStack {
@@ -72,7 +72,7 @@ struct HomeView: View {
                         
                         ScrollView(.horizontal) {
                             HStack {
-                                ForEach(habitModel.allHabits, id: \.id) { habit in
+                                ForEach(habitViewModel.allHabits, id: \.id) { habit in
                                     HabitCardView(habit: habit)
                                 }
                             }
@@ -83,7 +83,7 @@ struct HomeView: View {
                             .fontWeight(.semibold)
                         ScrollView {
                             VStack {
-                                ForEach(reminderModel.reminders) {reminder in
+                                ForEach(reminderViewModel.reminders) {reminder in
                                     ReminderCardView(reminder: reminder)
                                         .padding(.horizontal)
                                 }
@@ -117,9 +117,9 @@ struct HomeView: View {
             username = "\(user?.userMetadata["display_name"], default: "")"
         }
         .task {
-            await habitModel.fetchHabits()
+            await habitViewModel.fetchHabits()
             habitsLoaded = true
-            await reminderModel.fetchReminders()
+            await reminderViewModel.fetchReminders()
             remindersLoaded = true
         }
     }
