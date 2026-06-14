@@ -8,11 +8,18 @@
 import SwiftUI
 
 struct HabitOnboardingStepView: View {
+    @Binding var progress: Int
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        switch progress {
+        case 1:
+            HabitOnboardingNameAndIcon()
+        default:
+            Text("Step: \(progress)")
+        }
     }
 }
 
 #Preview {
-    HabitOnboardingStepView()
+    @Previewable @State var progress: Int = 1
+    HabitOnboardingStepView(progress: $progress)
 }

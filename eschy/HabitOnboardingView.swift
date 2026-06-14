@@ -10,7 +10,7 @@ import SwiftUI
 struct HabitOnboardingView: View {
     @State private var progress: Int = 1
     var body: some View {
-        VStack {
+        VStack (spacing: 32) {
             HStack {
                 Button {
                     withAnimation(.easeInOut) {
