@@ -10,30 +10,35 @@ import SwiftUI
 struct HabitOnboardingView: View {
     @State private var progress: Int = 1
     var body: some View {
-        VStack (spacing: 32) {
-            HStack {
-                Button {
-                    withAnimation(.easeInOut) {
-                        if progress > 1 {
-                            progress -= 1
+        VStack (spacing: 20) {
+            VStack (spacing: 32) {
+                HStack {
+                    Button {
+                        withAnimation(.easeInOut) {
+                            if progress > 1 {
+                                progress -= 1
+                            }
                         }
+                    } label: {
+                        Image(systemName: "chevron.left")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 12)
+                            .foregroundStyle(.black)
                     }
-                } label: {
-                    Image(systemName: "chevron.left")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 24, height: 24)
-                        .foregroundStyle(.black)
+                    Spacer()
+                    Spacer()
+                    CreateHabitProgressView(progress: $progress)
+                    Spacer()
+                    Spacer()
+                    Spacer()
                 }
-                Spacer()
-                Spacer()
-                CreateHabitProgressView(progress: $progress)
-                Spacer()
-                Spacer()
-                Spacer()
+                
+                HabitOnboardingStepView(progress: $progress)
             }
+            .padding(.horizontal, 16)
             
-            HabitOnboardingStepView(progress: $progress)
+            Spacer()
             
             Button {
                 withAnimation(.easeInOut) {
@@ -55,7 +60,7 @@ struct HabitOnboardingView: View {
                     )
             }
         }
-        .padding(16)
+        .padding(.top, 16)
     }
 }
 
