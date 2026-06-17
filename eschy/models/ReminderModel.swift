@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Reminder: Decodable, Identifiable {
+struct Reminder: Decodable, Identifiable, Equatable {
     let id: UUID
     let userId: UUID
     let habitId: UUID

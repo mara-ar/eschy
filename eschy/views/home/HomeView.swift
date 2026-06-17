@@ -11,14 +11,16 @@ import Supabase
 
 
 struct HomeView: View {
-    @State private var user: User? = nil
+//    @State private var user: User? = nil
     @State private var avatarUrl: String = ""
     @State private var username: String = ""
-    @State private var habitsLoaded: Bool = false
-    @State private var remindersLoaded: Bool = false
+//    @State private var habitsLoaded: Bool = false
+//    @State private var remindersLoaded: Bool = false
     
-    @State private var habitViewModel: HabitViewModel = HabitViewModel()
-    @State private var reminderViewModel: ReminderViewModel = ReminderViewModel()
+//    @State private var habitViewModel: HabitViewModel = HabitViewModel()
+//    @State private var reminderViewModel: ReminderViewModel = ReminderViewModel()
+    
+    @StateObject private var viewModel: HomeViewModel = HomeViewModel()
     
     var body: some View {
         VStack {
@@ -36,8 +38,9 @@ struct HomeView: View {
                             LoadingView(spinnerColor: .white)
                         }
                     }
-                    .frame(width: 44, height: 44)
-                } else {
+                .frame(width: 44, height: 44)
+                }
+                else {
                     Image(systemName: "person.crop.circle")
                         .resizable()
                         .scaledToFit()
@@ -49,7 +52,7 @@ struct HomeView: View {
                         .font(.outfit(size: 12))
                         .foregroundStyle(.white)
                         .frame(alignment: .leading)
-                    Text("\(username)")
+                    Text(verbatim: "\(username)")
                         .font(.outfit(size: 16))
                         .fontWeight(.medium)
                         .foregroundStyle(.white)
@@ -64,7 +67,7 @@ struct HomeView: View {
             .frame(maxWidth: .infinity)
             // TODO: important information
             ZStack {
-                if habitsLoaded && remindersLoaded {
+                if viewModel.habits.count > 0 && viewModel.sortedReminderHabitPairs.count > 0 {
                     VStack (alignment: .leading) {
                         Text("Active Habits")
                             .font(.outfit(size: 16))
@@ -72,7 +75,7 @@ struct HomeView: View {
                         
                         ScrollView(.horizontal) {
                             HStack {
-                                ForEach(habitViewModel.allHabits, id: \.id) { habit in
+                                ForEach(viewModel.habits, id: \.id) { habit in
                                     HabitCardView(habit: habit)
                                 }
                             }
@@ -83,8 +86,8 @@ struct HomeView: View {
                             .fontWeight(.semibold)
                         ScrollView {
                             VStack {
-                                ForEach(reminderViewModel.reminders) {reminder in
-                                    ReminderCardView(reminder: reminder)
+                                ForEach(viewModel.sortedReminderHabitPairs, id: \.0.id) {r, h in
+                                    ReminderCardView(reminder: r, habit: h)
                                         .padding(.horizontal)
                                 }
                             }
@@ -99,7 +102,6 @@ struct HomeView: View {
                 } else {
                     LoadingView(spinnerColor: .primaryGreen)
                 }
-
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(.vertical, 20)
@@ -112,15 +114,17 @@ struct HomeView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(.primaryGreen)
         .task {
-            user = try? await supabase.auth.user()
-            avatarUrl = "\(user?.userMetadata["avatar_url"], default: "")"
-            username = "\(user?.userMetadata["display_name"], default: "")"
+            avatarUrl = "\(try? await supabase.auth.session.user.userMetadata["avatar_url"], default: "")"
+            username = "\(try? await supabase.auth.session.user.userMetadata["display_name"], default: "")"
         }
         .task {
-            await habitViewModel.fetchHabits()
-            habitsLoaded = true
-            await reminderViewModel.fetchReminders()
-            remindersLoaded = true
+            await viewModel.getAllHabits()
+            await viewModel.getAllReminders()
+            await viewModel.getSortedReminderHabitPairs()
+            //            await habitViewModel.fetchHabits()
+            //            habitsLoaded = true
+            //            await reminderViewModel.fetchReminders()
+            //            remindersLoaded = true
         }
     }
 }

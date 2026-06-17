@@ -9,8 +9,9 @@ import SwiftUI
 
 struct ReminderCardView: View {
     let reminder: Reminder
-    @State private var habitViewModel: HabitViewModel = HabitViewModel()
-    @State private var habitIcon: String?
+    let habit: Habit
+//    @State private var habitViewModel: HabitViewModel = HabitViewModel()
+//    @State private var habitIcon: String?
     
     var time: String {
         "\(reminder.hour):\(reminder.minute < 10 ? "0" : "")\(reminder.minute)"
@@ -64,7 +65,7 @@ struct ReminderCardView: View {
                     Circle()
                         .frame(width: 2, height: 2)
                         .foregroundStyle(.gray1)
-                    Text("\(habitIcon ?? "")")
+                    Text("\(habit.icon)")
                         .font(.outfit(size: 12))
                 }
             }
@@ -73,15 +74,15 @@ struct ReminderCardView: View {
             
             ReminderStatusView(status: reminderStatus)
         }
-        .task {
-            if let habit = await habitViewModel.fetchHabitById(id: reminder.habitId) {
-                habitIcon = habit.icon
-            }
-        }
+//        .task {
+//            if let habit = await habitViewModel.fetchHabitById(id: reminder.habitId) {
+//                habitIcon = habit.icon
+//            }
+//        }
     }
 }
 
-#Preview {
-    let reminder: Reminder = Reminder(id: UUID(), userId: UUID(), habitId: UUID(), hour: 19, minute: 0, label: "Evening reset", active: true, checkedIn: false)
-    ReminderCardView(reminder: reminder)
-}
+//#Preview {
+//    let reminder: Reminder = Reminder(id: UUID(), userId: UUID(), habitId: UUID(), hour: 19, minute: 0, label: "Evening reset", active: true, checkedIn: false)
+//    ReminderCardView(reminder: reminder)
+//}

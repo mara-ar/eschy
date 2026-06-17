@@ -17,6 +17,7 @@ struct Habit: Hashable, Decodable, Identifiable, Equatable {
     let icon: String
     let createdAt: Date
     let notificationContent: String
+    let streak: Int
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -24,5 +25,6 @@ struct Habit: Hashable, Decodable, Identifiable, Equatable {
         case icon
         case createdAt = "created_at"
         case notificationContent = "notification_content"
+        case streak = "streak_length"
     }
 }
