@@ -11,7 +11,7 @@ struct HabitId: Decodable, Identifiable {
     let id: UUID
 }
 
-struct Habit: Decodable, Identifiable, Equatable {
+struct Habit: Hashable, Decodable, Identifiable, Equatable {
     let id: UUID
     let habit: String
     let icon: String
