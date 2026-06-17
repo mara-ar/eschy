@@ -28,3 +28,20 @@ struct Habit: Hashable, Decodable, Identifiable, Equatable {
         case streak = "streak_length"
     }
 }
+
+final class HabitDecoder {
+    private let decoder = JSONDecoder()
+    
+    init() {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = TimeZone(secondsFromGMT: 0)
+        
+        decoder.dateDecodingStrategy = .formatted(formatter)
+    }
+    
+    func decode<T: Decodable>(_ type: T.Type, from data: Data) throws -> T {
+        try decoder.decode(type, from: data)
+    }
+}

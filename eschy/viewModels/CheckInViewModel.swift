@@ -21,17 +21,7 @@ internal import Combine
                 .single()
                 .execute()
             
-//            if let data = response?.data {
-//                if let jsonString = String(data: data, encoding: .utf8) {
-//                    print(jsonString)
-//                } else {
-//                    print("Unable to convert data to a UTF-8 string.")
-//                }
-//            }
-            
-            let decoder = JSONDecoder()
-            
-            decoder.dateDecodingStrategy = .iso8601
+            let decoder = CheckInDecoder()
             
             if let _ = response {
                 let checkIn = try decoder.decode(CheckIn.self, from: response!.data)

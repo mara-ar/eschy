@@ -10,8 +10,6 @@ import SwiftUI
 struct ReminderCardView: View {
     let reminder: Reminder
     let habit: Habit
-//    @State private var habitViewModel: HabitViewModel = HabitViewModel()
-//    @State private var habitIcon: String?
     
     var time: String {
         "\(reminder.hour):\(reminder.minute < 10 ? "0" : "")\(reminder.minute)"
@@ -74,11 +72,6 @@ struct ReminderCardView: View {
             
             ReminderStatusView(status: reminderStatus)
         }
-//        .task {
-//            if let habit = await habitViewModel.fetchHabitById(id: reminder.habitId) {
-//                habitIcon = habit.icon
-//            }
-//        }
     }
 }
 

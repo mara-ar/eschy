@@ -11,14 +11,8 @@ import Supabase
 
 
 struct HomeView: View {
-//    @State private var user: User? = nil
     @State private var avatarUrl: String = ""
     @State private var username: String = ""
-//    @State private var habitsLoaded: Bool = false
-//    @State private var remindersLoaded: Bool = false
-    
-//    @State private var habitViewModel: HabitViewModel = HabitViewModel()
-//    @State private var reminderViewModel: ReminderViewModel = ReminderViewModel()
     
     @StateObject private var viewModel: HomeViewModel = HomeViewModel()
     
@@ -121,10 +115,6 @@ struct HomeView: View {
             await viewModel.getAllHabits()
             await viewModel.getAllReminders()
             await viewModel.getSortedReminderHabitPairs()
-            //            await habitViewModel.fetchHabits()
-            //            habitsLoaded = true
-            //            await reminderViewModel.fetchReminders()
-            //            remindersLoaded = true
         }
     }
 }

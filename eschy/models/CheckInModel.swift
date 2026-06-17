@@ -26,3 +26,15 @@ struct CheckIn: Decodable, Identifiable {
         case createdAt = "created_at"
     }
 }
+
+final class CheckInDecoder {
+    private let decoder = JSONDecoder()
+    
+    init() {
+        decoder.dateDecodingStrategy = .iso8601
+    }
+    
+    func decode<T: Decodable>(_ type: T.Type, from data: Data) throws -> T {
+        try decoder.decode(type, from: data)
+    }
+}

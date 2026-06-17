@@ -16,22 +16,7 @@ internal import Combine
         do {
             let response = try? await supabase.from("habits").select().execute()
             
-//            if let data = response?.data {
-//                if let jsonString = String(data: data, encoding: .utf8) {
-//                    print(jsonString)
-//                } else {
-//                    print("Unable to convert data to a UTF-8 string.")
-//                }
-//            }
-            
-            let decoder = JSONDecoder()
-            
-            let formatter = DateFormatter()
-            formatter.dateFormat = "yyyy-MM-dd"
-            formatter.locale = Locale(identifier: "en_US_POSIX")
-            formatter.timeZone = TimeZone(secondsFromGMT: 0)
-            
-            decoder.dateDecodingStrategy = .formatted(formatter)
+            let decoder = HabitDecoder()
             
             let habits = try decoder.decode([Habit].self, from: response!.data)
             self.allHabits = habits

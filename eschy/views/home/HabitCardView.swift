@@ -9,8 +9,6 @@ import SwiftUI
 
 struct HabitCardView: View {
     let habit: Habit
-//    @State private var checkInViewModel: CheckInViewModel = CheckInViewModel()
-//    @State private var streak: Int?
     
     var body: some View {
         VStack {
@@ -41,24 +39,6 @@ struct HabitCardView: View {
                     .stroke(.gray3, lineWidth: 1)
             )
         }
-//        .task {
-//            let checkIn = await checkInViewModel.fetchLatestCheckInByHabitId(habitId: habit.id)
-//            var relapseDate: Date
-//            
-//            if let checkIn = checkIn {
-//                relapseDate = checkIn.createdAt
-//                let today = Date()
-//                let differenceInSeconds = today.timeIntervalSince(relapseDate)
-//                
-//                streak = Int(differenceInSeconds) / (60 * 60 * 24)
-//            } else {
-//                relapseDate = habit.createdAt
-//                let today = Date()
-//                let differenceInSeconds = today.timeIntervalSince(relapseDate)
-//                
-//                streak = Int(differenceInSeconds) / (60 * 60 * 24)
-//            }
-//        }
     }
 }
 

@@ -16,10 +16,12 @@
 		EF7DC4EE2FBB11FC0094C951 /* Realtime in Frameworks */ = {isa = PBXBuildFile; productRef = EF7DC4ED2FBB11FC0094C951 /* Realtime */; };
 		EF7DC4F02FBB11FC0094C951 /* Storage in Frameworks */ = {isa = PBXBuildFile; productRef = EF7DC4EF2FBB11FC0094C951 /* Storage */; };
 		EF7DC4F22FBB11FC0094C951 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = EF7DC4F12FBB11FC0094C951 /* Supabase */; };
+		EFF991EE2FE2A1DC005CC994 /* utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF991ED2FE2A1DC005CC994 /* utils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		EFB1A6AE2FB0FACF0083887D /* eschy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = eschy.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EFF991ED2FE2A1DC005CC994 /* utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = utils.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -73,6 +75,7 @@
 		EFB1A6A52FB0FACF0083887D = {
 			isa = PBXGroup;
 			children = (
+				EFF991ED2FE2A1DC005CC994 /* utils.swift */,
 				EFB1A6B02FB0FACF0083887D /* eschy */,
 				EF7DC4E62FBB11FC0094C951 /* Frameworks */,
 				EFB1A6AF2FB0FACF0083887D /* Products */,
@@ -175,6 +178,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EFF991EE2FE2A1DC005CC994 /* utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
