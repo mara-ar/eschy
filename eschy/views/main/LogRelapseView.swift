@@ -12,7 +12,8 @@ struct LogRelapseView: View {
     @State private var selection: Habit? = nil
     @State private var entry: String = ""
     @State private var isExpanded: Bool = false
-    @State private var habitViewModel: HabitViewModel = HabitViewModel()
+//    @State private var habitViewModel: HabitViewModel = HabitViewModel()
+    @StateObject private var viewModel: LogRelapseViewModel = LogRelapseViewModel()
     @FocusState private var focusedField: Field?
     
     enum Field: Hashable {
@@ -98,7 +99,7 @@ struct LogRelapseView: View {
                 
                 if isExpanded {
                     ScrollView {
-                        ForEach(habitViewModel.allHabits, id: \.id) { habit in
+                        ForEach(viewModel.habits ?? [], id: \.id) { habit in
                             HStack {
                                 HStack (spacing: 5) {
                                     Text("\(habit.habit)")
@@ -164,7 +165,7 @@ struct LogRelapseView: View {
         }
         .padding()
         .task {
-            await habitViewModel.fetchHabits()
+            await viewModel.getAllHabits()
         }
         .toolbar {
             ToolbarItem(placement: .keyboard) {

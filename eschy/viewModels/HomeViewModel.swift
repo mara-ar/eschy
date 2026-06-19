@@ -9,6 +9,7 @@ import Foundation
 import Supabase
 internal import Combine
 
+@MainActor
 final class HomeViewModel: ObservableObject {
     @Published var habits: [Habit] = []
     @Published var reminders: [Reminder] = []

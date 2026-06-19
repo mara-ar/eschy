@@ -1,8 +1,8 @@
 //
-//  LogRelapseViewModel.swift
+//  StayStrongViewModel.swift
 //  eschy
 //
-//  Created by Abhinav Mara on 6/17/26.
+//  Created by Abhinav Mara on 6/19/26.
 //
 
 import Foundation
@@ -10,9 +10,7 @@ import Supabase
 internal import Combine
 
 @MainActor
-final class LogRelapseViewModel: ObservableObject {
-    @Published var relapsedHabit: Habit?
-    @Published var journalEntry: String?
+final class StayStrongViewModel: ObservableObject {
     @Published var habits: [Habit]?
     
     func getAllHabits() async {
@@ -27,6 +25,4 @@ final class LogRelapseViewModel: ObservableObject {
             print(error)
         }
     }
-    
-    func logRelapse() {}
 }

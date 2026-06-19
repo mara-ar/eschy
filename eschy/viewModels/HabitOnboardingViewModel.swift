@@ -8,6 +8,7 @@
 import Foundation
 internal import Combine
 
+@MainActor
 final class HabitOnboardingViewModel: ObservableObject {
     @Published var habitName: String?
     @Published var habitIcon: String?
