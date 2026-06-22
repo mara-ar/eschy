@@ -9,6 +9,7 @@ import SwiftUI
 
 struct HabitOnboardingView: View {
     @State private var progress: Int = 1
+    @State private var habitData: HabitSetup = HabitSetup()
     var body: some View {
         VStack (spacing: 20) {
             VStack (spacing: 32) {
@@ -34,13 +35,14 @@ struct HabitOnboardingView: View {
                     Spacer()
                 }
                 
-                HabitOnboardingStepView(progress: $progress)
+                HabitOnboardingStepView(progress: $progress, habitData: $habitData)
             }
             .padding(.horizontal, 16)
             
             Spacer()
             
             Button {
+                print(habitData)
                 withAnimation(.easeInOut) {
                     if progress < 5 {
                         progress += 1

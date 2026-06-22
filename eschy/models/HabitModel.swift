@@ -29,6 +29,20 @@ struct Habit: Hashable, Decodable, Identifiable, Equatable {
     }
 }
 
+struct HabitSetup: Hashable, Decodable {
+    var habit: String
+    var icon: String
+    var notificationContent: String
+    var motivationId: UUID?
+    
+    init() {
+        self.habit = ""
+        self.icon = ""
+        self.notificationContent = ""
+        self.motivationId = nil
+    }
+}
+
 final class HabitDecoder {
     private let decoder = JSONDecoder()
     

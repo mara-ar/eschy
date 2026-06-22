@@ -9,6 +9,7 @@ import SwiftUI
 import EmojiKit
 
 struct HabitOnboardingNameAndIcon: View {
+    @Binding var habitData: HabitSetup
     @State private var habitName: String = ""
     @State private var emojiPickerIsActive: Bool = false
     
@@ -31,7 +32,7 @@ struct HabitOnboardingNameAndIcon: View {
                     Text("Enter Habit Name")
                         .font(.outfit(size: 12))
                         .foregroundStyle(.gray1)
-                    TextField("", text: $habitName)
+                    TextField("", text: $habitData.habit)
                         .font(.outfit(size: 16))
                         .fontWeight(.medium)
                         .focused($isFocusedOnHabitName)
@@ -55,56 +56,11 @@ struct HabitOnboardingNameAndIcon: View {
                                         .shadow(color: .gray3, radius: 1, x: 1, y: 3)
                                 )
                         }
-//                        Spacer()
-//                        Button {
-//                            withAnimation(.easeInOut) {
-//                                emojiPickerIsActive.toggle()
-//                            }
-//                            isFocusedOnHabitName = false
-//                        } label: {
-//                            Image(systemName: "chevron.down")
-//                                .resizable()
-//                                .scaledToFit()
-//                                .frame(width: 15)
-//                                .rotationEffect(.degrees(emojiPickerIsActive ? 180 : 0))
-//                                .foregroundStyle(.black)
-//                        }
-//                        .padding(.vertical)
                     }
                     .frame(maxWidth: .infinity)
                     .padding(.horizontal)
-                    
-//                    if emojiPickerIsActive {
-//                        EmojiGridScrollView(
-//                            axis: .vertical,
-//                            category: categoryBinding,
-//                            selection: selectionBinding,
-//                            query: query,
-//                            action: { emoji in
-//                                withAnimation(.easeInOut) {
-//                                    emojiPickerIsActive.toggle()
-//                                }
-//                            },
-//                            sectionTitle: { $0.view },
-//                            gridItem: { $0.view }
-//                        )
-//                        .tint(.primaryGreen)
-//                        .navigationTitle("EmojiKit")
-//                        .searchable(text: $query, placement: .navigationBarDrawer)
-//                        .transition(.move(edge: .bottom))
-//                        .emojiGridStyle(.standard)
-//                    }
                 }
-//                .clipShape(RoundedRectangle(cornerRadius: 12))
-//                .padding(.vertical)
-//                .background(
-//                    RoundedRectangle(cornerRadius: 12)
-//                        .fill(.white)
-//                        .stroke(.gray3, lineWidth: 1)
-//                )
             }
-            
-//            Spacer()
         }
         .sheet(isPresented: $emojiPickerIsActive, onDismiss: {
             query = ""
@@ -147,6 +103,7 @@ struct HabitOnboardingNameAndIcon: View {
                     query: query,
                     action: { emoji in
                         emojiPickerIsActive.toggle()
+                        habitData.icon = emoji.char
                     },
                     sectionTitle: { $0.view },
                     gridItem: { $0.view }
@@ -162,5 +119,6 @@ struct HabitOnboardingNameAndIcon: View {
 }
 
 #Preview {
-    HabitOnboardingNameAndIcon()
+    @Previewable @State var habitData: HabitSetup = HabitSetup()
+    HabitOnboardingNameAndIcon(habitData: $habitData)
 }

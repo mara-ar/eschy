@@ -9,10 +9,11 @@ import SwiftUI
 
 struct HabitOnboardingStepView: View {
     @Binding var progress: Int
+    @Binding var habitData: HabitSetup
     var body: some View {
         switch progress {
         case 1:
-            HabitOnboardingNameAndIcon()
+            HabitOnboardingNameAndIcon(habitData: $habitData)
         default:
             Text("Step: \(progress)")
         }
@@ -21,5 +22,6 @@ struct HabitOnboardingStepView: View {
 
 #Preview {
     @Previewable @State var progress: Int = 1
-    HabitOnboardingStepView(progress: $progress)
+    @Previewable @State var onboardingHabit: HabitSetup = HabitSetup()
+    HabitOnboardingStepView(progress: $progress, habitData: $onboardingHabit)
 }
