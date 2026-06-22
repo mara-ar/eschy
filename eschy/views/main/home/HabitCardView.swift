@@ -19,7 +19,8 @@ struct HabitCardView: View {
                     .font(.outfit(size: 14))
                     .fontWeight(.medium)
                     .lineLimit(1)
-                    .frame(maxWidth: 90)
+                    .frame(maxWidth: 120)
+                    .padding(.horizontal, 10)
                 HStack (spacing: 5) {
                     Image(systemName: "flame.fill")
                         .foregroundColor(.red)
@@ -33,7 +34,6 @@ struct HabitCardView: View {
                 )
             }
             .padding(.vertical, 11)
-            .frame(width: 105)
             .background(
                 RoundedRectangle(cornerRadius: 12)
                     .stroke(.gray3, lineWidth: 1)
