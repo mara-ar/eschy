@@ -29,6 +29,14 @@ struct Reminder: Decodable, Identifiable, Equatable {
     }
 }
 
+struct ReminderData: Hashable, Decodable, Identifiable {
+    var id: UUID = UUID()
+    let hour: Int?
+    let minute: Int?
+    let label: String?
+    var isOn: Bool = true
+}
+
 enum ReminderStatus {
     case completed
     case missed
