@@ -16,6 +16,8 @@ struct HabitOnboardingStepView: View {
             HabitOnboardingNameAndIcon(habitData: $habitData)
         case 2:
             HabitOnboardingReminders(habitData: $habitData)
+        case 3:
+            HabitOnboardingNotificationView(habitData: $habitData)
         default:
             Text("Step: \(progress)")
         }
