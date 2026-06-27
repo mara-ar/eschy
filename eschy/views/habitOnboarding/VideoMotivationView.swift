@@ -24,6 +24,13 @@ struct VideoMotivationView: View {
                     }
 
                 }
+                
+                ToolbarItem(placement: .principal) {
+                    Text("Upload a meaningful video")
+                        .font(.outfit(size: 16))
+                        .fontWeight(.semibold)
+                }
+                
                 ToolbarItem (placement: .topBarTrailing) {
                     Button {
                         print("create video motivation")

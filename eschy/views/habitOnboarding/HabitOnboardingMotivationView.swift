@@ -31,10 +31,16 @@ struct HabitOnboardingMotivationView: View {
             switch motivationOption {
             case .text:
                 TextMotivationView(sheet: $motivationActiveSheet)
+                    .presentationDetents([.medium])
+                    .presentationBackground(.white)
             case .image:
                 ImageMotivationView(sheet: $motivationActiveSheet)
+                    .presentationDetents([.medium])
+                    .presentationBackground(.white)
             case .video:
                 VideoMotivationView(sheet: $motivationActiveSheet)
+                    .presentationDetents([.medium])
+                    .presentationBackground(.white)
             }
         }
     }

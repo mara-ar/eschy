@@ -24,6 +24,13 @@ struct ImageMotivationView: View {
                     }
 
                 }
+                
+                ToolbarItem(placement: .principal) {
+                    Text("Upload a meaningful image")
+                        .font(.outfit(size: 16))
+                        .fontWeight(.semibold)
+                }
+                
                 ToolbarItem (placement: .topBarTrailing) {
                     Button {
                         print("create image motivation")
