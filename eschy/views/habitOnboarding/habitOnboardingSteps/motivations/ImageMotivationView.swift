@@ -64,6 +64,7 @@ struct ImageMotivationView: View {
                             if let photoImage {
                                 photoImage
                                     .resizable()
+                                    .allowedDynamicRange(.high)
                                     .scaledToFit()
                             } else {
                                 Image("upload")
