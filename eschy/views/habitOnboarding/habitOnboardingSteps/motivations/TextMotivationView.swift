@@ -50,26 +50,25 @@ struct TextMotivationView: View {
                             )
                     }
                 }
-                ScrollView {
-                    VStack (alignment: .leading) {
-                        Text("Enter motivational text")
-                            .font(.outfit(size: 12))
-                            .foregroundStyle(.gray1)
-                        TextField("", text: $motivationalText, axis: .vertical)
-                            .font(.outfit(size: 16))
-                            .fontWeight(.medium)
-                            .fixedSize(horizontal: false, vertical: true)
-                            .lineLimit(4)
-                    }
-                    .fixedSize(horizontal: false, vertical: true)
-                    .padding()
-                    .background(
-                        RoundedRectangle(cornerRadius: 12)
-                            .stroke(.gray3, lineWidth: 1)
-                    )
+                
+                VStack (alignment: .leading) {
+                    Text("Enter motivational text")
+                        .font(.outfit(size: 12))
+                        .foregroundStyle(.gray1)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    TextField("", text: $motivationalText, axis: .vertical)
+                        .font(.outfit(size: 16))
+                        .fontWeight(.medium)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                 }
+                .frame(maxWidth: .infinity)
+                .padding()
+                .background(
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(.gray3, lineWidth: 1)
+                )
 
-//                Spacer()
+                Spacer()
                 
                 Button {
                     print("go to preview")
