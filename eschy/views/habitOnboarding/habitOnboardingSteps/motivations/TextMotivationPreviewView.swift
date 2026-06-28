@@ -25,7 +25,7 @@ struct TextMotivationPreviewView: View {
         .padding()
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(.primaryGreen, ignoresSafeAreaEdges: .all)
-        .overlay(alignment: .bottomTrailing) {
+        .overlay(alignment: .bottom) {
             Button {
                 print("go back")
                 sheet = false
@@ -37,9 +37,9 @@ struct TextMotivationPreviewView: View {
                     .padding(.horizontal, 20)
                     .background(
                         Capsule()
-                            .fill(.primaryGreen)
+                            .fill(.white)
                     )
-                    .foregroundStyle(.white)
+                    .foregroundStyle(.black)
             }
 
         }
