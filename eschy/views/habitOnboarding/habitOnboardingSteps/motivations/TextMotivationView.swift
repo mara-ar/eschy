@@ -21,11 +21,11 @@ struct TextMotivationView: View {
                     } label: {
                         Image(systemName: "xmark")
                             .padding()
-                            .foregroundStyle(.white)
+                            .foregroundStyle(.black)
                             .background(
                                 Circle()
-                                    .fill(.black)
-                                    .shadow(radius: 2, y: 2)
+                                    .fill(.white)
+                                    .shadow(color: .gray3.opacity(0.5), radius: 5, y: 0)
                             )
                     }
                     
@@ -46,7 +46,7 @@ struct TextMotivationView: View {
                             .background(
                                 Circle()
                                     .fill(.primaryGreen)
-                                    .shadow(color: .primaryGreen, radius: 2, y: 2)
+                                    .shadow(color: .primaryGreen.opacity(0.5), radius: 5, y: 0)
                             )
                     }
                 }

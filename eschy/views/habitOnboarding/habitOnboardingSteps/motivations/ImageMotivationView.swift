@@ -14,6 +14,7 @@ struct ImageMotivationView: View {
         NavigationStack {
             VStack {
                 Text("Image Motivation View")
+                Spacer()
             }
             .toolbar {
                 ToolbarItem (placement: .topBarLeading) {

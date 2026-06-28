@@ -13,7 +13,7 @@ struct TextMotivationPreviewView: View {
     
     var body: some View {
         VStack (alignment: .center) {
-            ScrollView {
+            VStack {
                 Text("\(motivationalText)")
                     .font(.outfit(size: 24))
                     .fontWeight(.semibold)
