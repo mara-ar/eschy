@@ -13,14 +13,18 @@ struct TextMotivationPreviewView: View {
     
     var body: some View {
         VStack (alignment: .center) {
-            VStack {
-                Text("\(motivationalText)")
-                    .font(.outfit(size: 24))
-                    .fontWeight(.semibold)
-                    .foregroundStyle(.white)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .frame(maxWidth: .infinity, alignment: .center)
+            ScrollView {
+                VStack {
+                    Text("\(motivationalText)")
+                        .font(.outfit(size: 24))
+                        .fontWeight(.semibold)
+                        .foregroundStyle(.white)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                }
             }
+            .defaultScrollAnchor(.center)
         }
         .padding()
         .frame(maxWidth: .infinity, maxHeight: .infinity)
