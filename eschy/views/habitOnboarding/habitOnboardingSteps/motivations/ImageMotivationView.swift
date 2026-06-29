@@ -13,7 +13,7 @@ struct ImageMotivationView: View {
     @State private var photoPickerIsActive: Bool = false
     @State private var photoSelection: PhotosPickerItem?
     @State private var photoImage: Image?
-    @State private var imageMotivationSheet: ImageMotivationSheet?
+    @State private var imageMotivationSheet: ImageMotivationSheet? = nil
     
     var body: some View {
         NavigationStack {
@@ -101,6 +101,7 @@ struct ImageMotivationView: View {
                     
                     Button {
                         print("go to editing mode")
+                        imageMotivationSheet = .edit
                     } label: {
                         HStack (spacing: 5) {
                             Image("edit")
@@ -120,6 +121,7 @@ struct ImageMotivationView: View {
                 
                 Button {
                     print("go to preview / editing mode")
+                    imageMotivationSheet = .preview
                 } label: {
                     Text("Preview")
                         .font(.outfit(size: 14))
@@ -174,13 +176,13 @@ struct ImageMotivationView: View {
             .presentationDetents([.medium])
             .presentationBackground(.white)
         }
-        .sheet(item: $imageMotivationSheet) {
+        .fullScreenCover(item: $imageMotivationSheet) {
             print("dismissing from edit and preview")
         } content: { sheet in
             switch sheet {
             case .edit:
                 if let photoImage {
-                    ImageMotivationEditView(img: photoImage)
+                    ImageMotivationEditView(sheet: $imageMotivationSheet, img: photoImage)
                 }
             case .preview:
                 ImageMotivationPreviewView()
