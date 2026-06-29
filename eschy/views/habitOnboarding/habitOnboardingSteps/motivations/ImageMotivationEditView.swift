@@ -12,6 +12,23 @@ struct ImageMotivationEditView: View {
     let img: Image
     @State private var position: CGPoint = CGPoint(x: 0, y: 0)
     @State private var movingOffset: CGSize = CGSize(width: 0, height: 0)
+    @State private var scaleValue: CGFloat = 1
+    @State private var scaleBase: CGFloat = 1
+    
+    var scale: some Gesture {
+        MagnifyGesture()
+            .onChanged { value in
+                if value.magnification < 1 {
+                    scaleValue = max(0, scaleBase + value.magnification - 1)
+                } else if value.magnification > 1 {
+//                    scaleValue = min(5, scaleBase + value.magnification - 1)
+                    scaleValue = scaleBase + value.magnification - 1
+                }
+            }
+            .onEnded { value in
+                scaleBase = scaleValue
+            }
+    }
     
     var drag: some Gesture {
         DragGesture()
@@ -33,13 +50,37 @@ struct ImageMotivationEditView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .position(position)
+                    .scaleEffect(scaleValue)
                     .gesture(drag)
+                    .gesture(scale)
             }
             .onAppear(perform: {
                 position.x = geometry.size.width / 2
                 position.y = geometry.size.height / 2
             })
             .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .overlay(alignment: .bottom, content: {
+                Button {
+                    print("reset")
+                    scaleBase = 1
+                    scaleValue = 1
+                    position.x = geometry.size.width / 2
+                    position.y = geometry.size.height / 2
+                    movingOffset = CGSize(width: 0, height: 0)
+                } label: {
+                    Text("Reset")
+                        .font(.outfit(size: 14))
+                        .fontWeight(.semibold)
+                        .padding(.horizontal, 20)
+                        .padding(.vertical, 10)
+                        .foregroundStyle(.black)
+                        .background(
+                            Capsule()
+                                .fill(.white)
+                        )
+                }
+
+            })
             .overlay(alignment: .top) {
                 HStack {
                     Button {
