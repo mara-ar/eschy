@@ -13,6 +13,7 @@ struct ImageMotivationView: View {
     @State private var photoPickerIsActive: Bool = false
     @State private var photoSelection: PhotosPickerItem?
     @State private var photoImage: Image?
+    @State private var imageMotivationSheet: ImageMotivationSheet?
     
     var body: some View {
         NavigationStack {
@@ -172,6 +173,29 @@ struct ImageMotivationView: View {
             }
             .presentationDetents([.medium])
             .presentationBackground(.white)
+        }
+        .sheet(item: $imageMotivationSheet) {
+            print("dismissing from edit and preview")
+        } content: { sheet in
+            switch sheet {
+            case .edit:
+                if let photoImage {
+                    ImageMotivationEditView(img: photoImage)
+                }
+            case .preview:
+                ImageMotivationPreviewView()
+            }
+        }
+
+    }
+}
+
+enum ImageMotivationSheet: Identifiable {
+    case edit, preview
+    var id: String {
+        switch self {
+        case .edit: return "edit"
+        case .preview: return "preview"
         }
     }
 }
