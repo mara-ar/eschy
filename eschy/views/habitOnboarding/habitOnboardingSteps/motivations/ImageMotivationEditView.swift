@@ -10,7 +10,7 @@ import SwiftUI
 struct ImageMotivationEditView: View {
     @Binding var habitData: HabitSetup
     @Binding var sheet: ImageMotivationSheet?
-//    let img: Image
+    let img: Image
     let uiImage: UIImage
     @State private var position: CGPoint = CGPoint(x: 0, y: 0)
     @State private var movingOffset: CGSize = CGSize(width: 0, height: 0)
@@ -48,7 +48,7 @@ struct ImageMotivationEditView: View {
     var body: some View {
         GeometryReader { geometry in
             VStack {
-                Image(uiImage: uiImage)
+                img
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .position(position)

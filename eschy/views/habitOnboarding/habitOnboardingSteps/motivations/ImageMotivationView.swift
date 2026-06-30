@@ -94,6 +94,7 @@ struct ImageMotivationView: View {
                                 let uiImage = UIImage(data: imageData)
                                 if let uiImage {
                                     photoImage = Image(uiImage: uiImage)
+                                    photoUIImage = uiImage
                                 }
                             } else {
                                 print("Failed to load image")
@@ -139,58 +140,14 @@ struct ImageMotivationView: View {
                 config.type = .image
             }
         })
-        .sheet(isPresented: $photoPickerIsActive, onDismiss: {
-            photoPickerIsActive = false
-        }) {
-            VStack {
-                PhotosPicker(
-                    selection: $photoSelection,
-                    matching: .images,
-                    preferredItemEncoding: .current,
-                    photoLibrary: .shared()
-                ) {
-                    VStack {
-                        Text("Select Photos")
-                        if let photo = photoSelection {
-                            Button {
-                                print("\(photo)")
-                            } label: {
-                                Text("show photo info")
-                            }
-                            
-                        }
-                        if let image = photoImage {
-                            image
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 250)
-                        }
-                    }
-                }
-                .onChange(of: photoSelection) {
-                    Task {
-                        if let imageData = try? await photoSelection?.loadTransferable(type: Data.self) {
-                            photoUIImage = UIImage(data: imageData)
-                            if let photoUIImage {
-                                photoImage = Image(uiImage: photoUIImage)
-                            }
-                        } else {
-                            print("Failed to load image")
-                        }
-                    }
-                }
-            }
-            .presentationDetents([.medium])
-            .presentationBackground(.white)
-        }
         .fullScreenCover(item: $imageMotivationSheet) {
             print("dismissing from edit and preview")
         } content: { sheet in
             switch sheet {
             case .edit:
-                if let photoUIImage {
+                if let photoUIImage, let photoImage {
 //                    ImageMotivationEditView(habitData: $habitData, sheet: $imageMotivationSheet, img: photoImage)
-                    ImageMotivationEditView(habitData: $habitData, sheet: $imageMotivationSheet, uiImage: photoUIImage)
+                    ImageMotivationEditView(habitData: $habitData, sheet: $imageMotivationSheet, img: photoImage, uiImage: photoUIImage)
                 }
             case .preview:
                 ImageMotivationPreviewView()
