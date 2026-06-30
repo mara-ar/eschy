@@ -28,6 +28,9 @@ struct HabitOnboardingMotivationView: View {
                 MotivationOptionView(sheet: $motivationActiveSheet, name: "Image", description: "Something meaningful", icon: Image("image"), sheetToActivate: .image)
                 MotivationOptionView(sheet: $motivationActiveSheet, name: "Video", description: "A message to yourself", icon: Image("camera"), sheetToActivate: .video)
             }
+            if let motivationType = habitData.motivationConfig.type {
+                HabitOnboardingMotivationCardView(habitData: $habitData)
+            }
         }
         .sheet(item: $motivationActiveSheet, onDismiss: onDismissMotivationSetup) { motivationOption in
             switch motivationOption {

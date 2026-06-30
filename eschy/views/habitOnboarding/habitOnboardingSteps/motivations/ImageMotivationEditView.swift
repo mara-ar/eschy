@@ -107,6 +107,8 @@ struct ImageMotivationEditView: View {
                         habitData.motivationConfig.imagePosition = position
                         habitData.motivationConfig.imageScale = scaleValue
                         sheet = nil
+                        print("from image edit view")
+                        print("\(habitData)")
                     } label: {
                         Image(systemName: "checkmark")
                             .padding()

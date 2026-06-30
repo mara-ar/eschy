@@ -40,6 +40,9 @@ struct TextMotivationView: View {
                     
                     Button {
                         print("submit text-based motivation")
+                        habitData.motivationConfig.type = .text
+                        habitData.motivationConfig.textContent = motivationalText
+                        sheet = nil
                     } label: {
                         Image(systemName: "checkmark")
                             .foregroundStyle(.white)
@@ -85,7 +88,8 @@ struct TextMotivationView: View {
             .padding()
         }
         .onAppear(perform: {
-            habitData.motivationConfig.type = .text
+//            habitData.motivationConfig.type = .text
+//            habitData.motivationConfig.textContent = motivationalText
         })
         .fullScreenCover(isPresented: $previewSheet) {
             TextMotivationPreviewView(sheet: $previewSheet, motivationalText: motivationalText)

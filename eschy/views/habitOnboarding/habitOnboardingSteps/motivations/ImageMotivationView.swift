@@ -96,6 +96,7 @@ struct ImageMotivationView: View {
                                 if let uiImage {
                                     photoImage = Image(uiImage: uiImage)
                                     photoUIImage = uiImage
+                                    habitData.motivationConfig.image = photoUIImage?.pngData()
                                 }
                             } else {
                                 print("Failed to load image")

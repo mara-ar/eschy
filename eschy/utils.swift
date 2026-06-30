@@ -104,4 +104,24 @@ func getOpacityFromIndexDiff(indexDiff: Int) -> Double {
     return 1.0 / (Double(abs(Double(indexDiff))) + multiplier)
 }
 
+struct MotivationCardAnimation: ViewModifier {
+    @Binding var isAnimating: Bool
+    
+    func body(content: Content) -> some View {
+        content
+            .padding()
+            .background(
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(.white)
+                    .shadow(color: .gray3, radius: 10, y: 5)
+            )
+            .offset(y: isAnimating ? 0 : 15)
+            .animation(.easeInOut(duration: 1).repeatForever(autoreverses: true), value: isAnimating)
+    }
+}
 
+extension View {
+    func motivationCardAnimation(isAnimating: Binding<Bool>) -> some View {
+        self.modifier(MotivationCardAnimation(isAnimating: isAnimating))
+    }
+}
