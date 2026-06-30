@@ -28,8 +28,14 @@ struct HabitOnboardingMotivationView: View {
                 MotivationOptionView(sheet: $motivationActiveSheet, name: "Image", description: "Something meaningful", icon: Image("image"), sheetToActivate: .image)
                 MotivationOptionView(sheet: $motivationActiveSheet, name: "Video", description: "A message to yourself", icon: Image("camera"), sheetToActivate: .video)
             }
-            if let motivationType = habitData.motivationConfig.type {
-                HabitOnboardingMotivationCardView(habitData: $habitData)
+            if let _ = habitData.motivationConfig.type {
+                VStack {
+                    Text("Motivation")
+                        .font(.outfit(size: 16))
+                        .fontWeight(.semibold)
+                    HabitOnboardingMotivationCardView(habitData: $habitData)
+                }
+                .frame(maxWidth: .infinity)
             }
         }
         .sheet(item: $motivationActiveSheet, onDismiss: onDismissMotivationSetup) { motivationOption in
@@ -86,7 +92,8 @@ struct MotivationOptionView: View {
                 icon
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 36)
+                    .frame(width: 36, height: 36)
+                    .fixedSize()
             }
             .padding()
             .background(
