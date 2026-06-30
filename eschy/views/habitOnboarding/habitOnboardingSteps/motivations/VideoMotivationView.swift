@@ -42,9 +42,7 @@ struct VideoMotivationView: View {
             }
         }
         .onAppear {
-            if var config = habitData.motivationConfig {
-                config.type = .video
-            }
+            habitData.motivationConfig.type = .video
         }
     }
 }

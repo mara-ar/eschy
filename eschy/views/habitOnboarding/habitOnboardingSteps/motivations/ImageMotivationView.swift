@@ -44,6 +44,7 @@ struct ImageMotivationView: View {
                     
                     Button {
                         print("submit image-based motivation")
+                        sheet = nil
                     } label: {
                         Image(systemName: "checkmark")
                             .foregroundStyle(.white)
@@ -122,23 +123,28 @@ struct ImageMotivationView: View {
                 
                 Spacer()
                 
-                Button {
-                    print("go to preview / editing mode")
-                    imageMotivationSheet = .preview
-                } label: {
+                if let _ = photoImage {
+                    Button {
+                        print("go to preview / editing mode")
+                        imageMotivationSheet = .preview
+                    } label: {
+                        Text("Preview")
+                            .font(.outfit(size: 14))
+                            .fontWeight(.semibold)
+                            .foregroundStyle(.primaryGreen)
+                    }
+                } else {
                     Text("Preview")
                         .font(.outfit(size: 14))
                         .fontWeight(.semibold)
-                        .foregroundStyle(.primaryGreen)
+                        .foregroundStyle(.gray2)
                 }
 
             }
             .padding()
         }
         .onAppear(perform: {
-            if var config = habitData.motivationConfig {
-                config.type = .image
-            }
+            habitData.motivationConfig.type = .image
         })
         .fullScreenCover(item: $imageMotivationSheet) {
             print("dismissing from edit and preview")
@@ -150,7 +156,7 @@ struct ImageMotivationView: View {
                     ImageMotivationEditView(habitData: $habitData, sheet: $imageMotivationSheet, img: photoImage, uiImage: photoUIImage)
                 }
             case .preview:
-                ImageMotivationPreviewView()
+                ImageMotivationPreviewView(habitData: $habitData, sheet: $imageMotivationSheet)
             }
         }
 

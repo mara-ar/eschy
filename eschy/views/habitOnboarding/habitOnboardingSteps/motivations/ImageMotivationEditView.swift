@@ -35,8 +35,8 @@ struct ImageMotivationEditView: View {
     var drag: some Gesture {
         DragGesture()
             .onChanged { value in
-                position.x += value.translation.width - movingOffset.width
-                position.y += value.translation.height - movingOffset.height
+                position.x += (value.translation.width - movingOffset.width) * (1 / scaleValue)
+                position.y += (value.translation.height - movingOffset.height) * (1 / scaleValue)
                 
                 movingOffset = value.translation
             }
@@ -103,11 +103,9 @@ struct ImageMotivationEditView: View {
                     
                     Button {
                         print("save and go back")
-                        if var config = habitData.motivationConfig {
-                            config.image = uiImage.pngData()
-                            config.imagePosition = position
-                            config.imageScale = scaleValue
-                        }
+                        habitData.motivationConfig.image = uiImage.pngData()
+                        habitData.motivationConfig.imagePosition = position
+                        habitData.motivationConfig.imageScale = scaleValue
                         sheet = nil
                     } label: {
                         Image(systemName: "checkmark")

@@ -13,6 +13,8 @@ struct HabitOnboardingMotivationView: View {
     
     func onDismissMotivationSetup() {
         motivationActiveSheet = nil
+        print("in habit onboarding")
+        print(habitData)
     }
     
     var body: some View {

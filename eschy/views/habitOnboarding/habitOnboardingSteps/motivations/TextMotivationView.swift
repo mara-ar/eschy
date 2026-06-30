@@ -85,9 +85,7 @@ struct TextMotivationView: View {
             .padding()
         }
         .onAppear(perform: {
-            if var config = habitData.motivationConfig {
-                config.type = .text
-            }
+            habitData.motivationConfig.type = .text
         })
         .fullScreenCover(isPresented: $previewSheet) {
             TextMotivationPreviewView(sheet: $previewSheet, motivationalText: motivationalText)
