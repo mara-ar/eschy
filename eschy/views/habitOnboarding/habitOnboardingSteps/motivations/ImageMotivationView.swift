@@ -9,10 +9,12 @@ import SwiftUI
 import PhotosUI
 
 struct ImageMotivationView: View {
+    @Binding var habitData: HabitSetup
     @Binding var sheet: MotivationActiveSheet?
     @State private var photoPickerIsActive: Bool = false
     @State private var photoSelection: PhotosPickerItem?
     @State private var photoImage: Image?
+    @State private var photoUIImage: UIImage?
     @State private var imageMotivationSheet: ImageMotivationSheet? = nil
     
     var body: some View {
@@ -132,6 +134,11 @@ struct ImageMotivationView: View {
             }
             .padding()
         }
+        .onAppear(perform: {
+            if var config = habitData.motivationConfig {
+                config.type = .image
+            }
+        })
         .sheet(isPresented: $photoPickerIsActive, onDismiss: {
             photoPickerIsActive = false
         }) {
@@ -163,9 +170,9 @@ struct ImageMotivationView: View {
                 .onChange(of: photoSelection) {
                     Task {
                         if let imageData = try? await photoSelection?.loadTransferable(type: Data.self) {
-                            let uiImage = UIImage(data: imageData)
-                            if let uiImage {
-                                photoImage = Image(uiImage: uiImage)
+                            photoUIImage = UIImage(data: imageData)
+                            if let photoUIImage {
+                                photoImage = Image(uiImage: photoUIImage)
                             }
                         } else {
                             print("Failed to load image")
@@ -181,8 +188,9 @@ struct ImageMotivationView: View {
         } content: { sheet in
             switch sheet {
             case .edit:
-                if let photoImage {
-                    ImageMotivationEditView(sheet: $imageMotivationSheet, img: photoImage)
+                if let photoUIImage {
+//                    ImageMotivationEditView(habitData: $habitData, sheet: $imageMotivationSheet, img: photoImage)
+                    ImageMotivationEditView(habitData: $habitData, sheet: $imageMotivationSheet, uiImage: photoUIImage)
                 }
             case .preview:
                 ImageMotivationPreviewView()

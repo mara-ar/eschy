@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct ImageMotivationEditView: View {
+    @Binding var habitData: HabitSetup
     @Binding var sheet: ImageMotivationSheet?
-    let img: Image
+//    let img: Image
+    let uiImage: UIImage
     @State private var position: CGPoint = CGPoint(x: 0, y: 0)
     @State private var movingOffset: CGSize = CGSize(width: 0, height: 0)
     @State private var scaleValue: CGFloat = 1
@@ -46,7 +48,7 @@ struct ImageMotivationEditView: View {
     var body: some View {
         GeometryReader { geometry in
             VStack {
-                img
+                Image(uiImage: uiImage)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .position(position)
@@ -101,6 +103,11 @@ struct ImageMotivationEditView: View {
                     
                     Button {
                         print("save and go back")
+                        if var config = habitData.motivationConfig {
+                            config.image = uiImage.pngData()
+                            config.imagePosition = position
+                            config.imageScale = scaleValue
+                        }
                         sheet = nil
                     } label: {
                         Image(systemName: "checkmark")

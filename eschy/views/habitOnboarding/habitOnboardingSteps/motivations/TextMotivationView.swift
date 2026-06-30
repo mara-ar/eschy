@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct TextMotivationView: View {
+    @Binding var habitData: HabitSetup
     @Binding var sheet: MotivationActiveSheet?
     @State private var previewSheet: Bool = false
     @State private var motivationalText = ""
@@ -83,6 +84,11 @@ struct TextMotivationView: View {
             }
             .padding()
         }
+        .onAppear(perform: {
+            if var config = habitData.motivationConfig {
+                config.type = .text
+            }
+        })
         .fullScreenCover(isPresented: $previewSheet) {
             TextMotivationPreviewView(sheet: $previewSheet, motivationalText: motivationalText)
         }

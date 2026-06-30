@@ -30,15 +30,15 @@ struct HabitOnboardingMotivationView: View {
         .sheet(item: $motivationActiveSheet, onDismiss: onDismissMotivationSetup) { motivationOption in
             switch motivationOption {
             case .text:
-                TextMotivationView(sheet: $motivationActiveSheet)
+                TextMotivationView(habitData: $habitData, sheet: $motivationActiveSheet)
                     .presentationDetents([.medium])
                     .presentationBackground(.white)
             case .image:
-                ImageMotivationView(sheet: $motivationActiveSheet)
+                ImageMotivationView(habitData: $habitData, sheet: $motivationActiveSheet)
                     .presentationDetents([.medium])
                     .presentationBackground(.white)
             case .video:
-                VideoMotivationView(sheet: $motivationActiveSheet)
+                VideoMotivationView(habitData: $habitData, sheet: $motivationActiveSheet)
                     .presentationDetents([.medium])
                     .presentationBackground(.white)
             }

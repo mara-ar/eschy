@@ -34,13 +34,13 @@ struct HabitSetup: Hashable, Decodable {
     var icon: String
     var notificationContent: String
     var reminders: [ReminderData] = []
-    var motivationId: UUID?
+    var motivationConfig: MotivationConfig?
     
     init() {
         self.habit = ""
         self.icon = ""
         self.notificationContent = ""
-        self.motivationId = nil
+        self.motivationConfig = MotivationConfig()
     }
 }
 

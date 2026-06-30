@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct VideoMotivationView: View {
+    @Binding var habitData: HabitSetup
     @Binding var sheet: MotivationActiveSheet?
     
     var body: some View {
@@ -38,6 +39,11 @@ struct VideoMotivationView: View {
                         Image(systemName: "checkmark")
                     }
                 }
+            }
+        }
+        .onAppear {
+            if var config = habitData.motivationConfig {
+                config.type = .video
             }
         }
     }
