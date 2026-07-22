@@ -7,15 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		EF3E2ACD2FDE317C000F1508 /* EmojiKit in Frameworks */ = {isa = PBXBuildFile; productRef = EF3E2ACC2FDE317C000F1508 /* EmojiKit */; };
-		EF7DC4DE2FBB0D7E0094C951 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = EF7DC4DD2FBB0D7E0094C951 /* GoogleSignIn */; };
-		EF7DC4E02FBB0D7E0094C951 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = EF7DC4DF2FBB0D7E0094C951 /* GoogleSignInSwift */; };
-		EF7DC4E82FBB11FC0094C951 /* Auth in Frameworks */ = {isa = PBXBuildFile; productRef = EF7DC4E72FBB11FC0094C951 /* Auth */; };
-		EF7DC4EA2FBB11FC0094C951 /* Functions in Frameworks */ = {isa = PBXBuildFile; productRef = EF7DC4E92FBB11FC0094C951 /* Functions */; };
-		EF7DC4EC2FBB11FC0094C951 /* PostgREST in Frameworks */ = {isa = PBXBuildFile; productRef = EF7DC4EB2FBB11FC0094C951 /* PostgREST */; };
-		EF7DC4EE2FBB11FC0094C951 /* Realtime in Frameworks */ = {isa = PBXBuildFile; productRef = EF7DC4ED2FBB11FC0094C951 /* Realtime */; };
-		EF7DC4F02FBB11FC0094C951 /* Storage in Frameworks */ = {isa = PBXBuildFile; productRef = EF7DC4EF2FBB11FC0094C951 /* Storage */; };
-		EF7DC4F22FBB11FC0094C951 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = EF7DC4F12FBB11FC0094C951 /* Supabase */; };
+		EF088FFC30109A0500ECE35D /* EmojiKit in Frameworks */ = {isa = PBXBuildFile; productRef = EF088FFB30109A0500ECE35D /* EmojiKit */; };
+		EF088FFF30109A1C00ECE35D /* Auth in Frameworks */ = {isa = PBXBuildFile; productRef = EF088FFE30109A1C00ECE35D /* Auth */; };
+		EF08900130109A1C00ECE35D /* Functions in Frameworks */ = {isa = PBXBuildFile; productRef = EF08900030109A1C00ECE35D /* Functions */; };
+		EF08900330109A1C00ECE35D /* PostgREST in Frameworks */ = {isa = PBXBuildFile; productRef = EF08900230109A1C00ECE35D /* PostgREST */; };
+		EF08900530109A1C00ECE35D /* Realtime in Frameworks */ = {isa = PBXBuildFile; productRef = EF08900430109A1C00ECE35D /* Realtime */; };
+		EF08900730109A1C00ECE35D /* Storage in Frameworks */ = {isa = PBXBuildFile; productRef = EF08900630109A1C00ECE35D /* Storage */; };
+		EF08900930109A1C00ECE35D /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = EF08900830109A1C00ECE35D /* Supabase */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,15 +46,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EF7DC4DE2FBB0D7E0094C951 /* GoogleSignIn in Frameworks */,
-				EF7DC4E02FBB0D7E0094C951 /* GoogleSignInSwift in Frameworks */,
-				EF7DC4F02FBB11FC0094C951 /* Storage in Frameworks */,
-				EF7DC4EA2FBB11FC0094C951 /* Functions in Frameworks */,
-				EF7DC4F22FBB11FC0094C951 /* Supabase in Frameworks */,
-				EF7DC4EE2FBB11FC0094C951 /* Realtime in Frameworks */,
-				EF3E2ACD2FDE317C000F1508 /* EmojiKit in Frameworks */,
-				EF7DC4E82FBB11FC0094C951 /* Auth in Frameworks */,
-				EF7DC4EC2FBB11FC0094C951 /* PostgREST in Frameworks */,
+				EF08900930109A1C00ECE35D /* Supabase in Frameworks */,
+				EF08900730109A1C00ECE35D /* Storage in Frameworks */,
+				EF08900330109A1C00ECE35D /* PostgREST in Frameworks */,
+				EF08900130109A1C00ECE35D /* Functions in Frameworks */,
+				EF088FFF30109A1C00ECE35D /* Auth in Frameworks */,
+				EF08900530109A1C00ECE35D /* Realtime in Frameworks */,
+				EF088FFC30109A0500ECE35D /* EmojiKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -107,15 +103,13 @@
 			);
 			name = eschy;
 			packageProductDependencies = (
-				EF7DC4DD2FBB0D7E0094C951 /* GoogleSignIn */,
-				EF7DC4DF2FBB0D7E0094C951 /* GoogleSignInSwift */,
-				EF7DC4E72FBB11FC0094C951 /* Auth */,
-				EF7DC4E92FBB11FC0094C951 /* Functions */,
-				EF7DC4EB2FBB11FC0094C951 /* PostgREST */,
-				EF7DC4ED2FBB11FC0094C951 /* Realtime */,
-				EF7DC4EF2FBB11FC0094C951 /* Storage */,
-				EF7DC4F12FBB11FC0094C951 /* Supabase */,
-				EF3E2ACC2FDE317C000F1508 /* EmojiKit */,
+				EF088FFB30109A0500ECE35D /* EmojiKit */,
+				EF088FFE30109A1C00ECE35D /* Auth */,
+				EF08900030109A1C00ECE35D /* Functions */,
+				EF08900230109A1C00ECE35D /* PostgREST */,
+				EF08900430109A1C00ECE35D /* Realtime */,
+				EF08900630109A1C00ECE35D /* Storage */,
+				EF08900830109A1C00ECE35D /* Supabase */,
 			);
 			productName = eschy;
 			productReference = EFB1A6AE2FB0FACF0083887D /* eschy.app */;
@@ -146,9 +140,8 @@
 			mainGroup = EFB1A6A52FB0FACF0083887D;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				EF7DC4DC2FBB0D7E0094C951 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
-				EF7DC4E12FBB0D950094C951 /* XCRemoteSwiftPackageReference "supabase-swift" */,
-				EF3E2ACB2FDE317C000F1508 /* XCRemoteSwiftPackageReference "EmojiKit" */,
+				EF088FFA30109A0500ECE35D /* XCRemoteSwiftPackageReference "EmojiKit" */,
+				EF088FFD30109A1C00ECE35D /* XCRemoteSwiftPackageReference "supabase-swift" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = EFB1A6AF2FB0FACF0083887D /* Products */;
@@ -396,7 +389,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		EF3E2ACB2FDE317C000F1508 /* XCRemoteSwiftPackageReference "EmojiKit" */ = {
+		EF088FFA30109A0500ECE35D /* XCRemoteSwiftPackageReference "EmojiKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/danielsaidi/EmojiKit.git";
 			requirement = {
@@ -404,15 +397,7 @@
 				minimumVersion = 3.0.0;
 			};
 		};
-		EF7DC4DC2FBB0D7E0094C951 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 9.1.0;
-			};
-		};
-		EF7DC4E12FBB0D950094C951 /* XCRemoteSwiftPackageReference "supabase-swift" */ = {
+		EF088FFD30109A1C00ECE35D /* XCRemoteSwiftPackageReference "supabase-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/supabase-community/supabase-swift.git";
 			requirement = {
@@ -423,49 +408,39 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		EF3E2ACC2FDE317C000F1508 /* EmojiKit */ = {
+		EF088FFB30109A0500ECE35D /* EmojiKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = EF3E2ACB2FDE317C000F1508 /* XCRemoteSwiftPackageReference "EmojiKit" */;
+			package = EF088FFA30109A0500ECE35D /* XCRemoteSwiftPackageReference "EmojiKit" */;
 			productName = EmojiKit;
 		};
-		EF7DC4DD2FBB0D7E0094C951 /* GoogleSignIn */ = {
+		EF088FFE30109A1C00ECE35D /* Auth */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = EF7DC4DC2FBB0D7E0094C951 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
-			productName = GoogleSignIn;
-		};
-		EF7DC4DF2FBB0D7E0094C951 /* GoogleSignInSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = EF7DC4DC2FBB0D7E0094C951 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
-			productName = GoogleSignInSwift;
-		};
-		EF7DC4E72FBB11FC0094C951 /* Auth */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = EF7DC4E12FBB0D950094C951 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			package = EF088FFD30109A1C00ECE35D /* XCRemoteSwiftPackageReference "supabase-swift" */;
 			productName = Auth;
 		};
-		EF7DC4E92FBB11FC0094C951 /* Functions */ = {
+		EF08900030109A1C00ECE35D /* Functions */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = EF7DC4E12FBB0D950094C951 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			package = EF088FFD30109A1C00ECE35D /* XCRemoteSwiftPackageReference "supabase-swift" */;
 			productName = Functions;
 		};
-		EF7DC4EB2FBB11FC0094C951 /* PostgREST */ = {
+		EF08900230109A1C00ECE35D /* PostgREST */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = EF7DC4E12FBB0D950094C951 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			package = EF088FFD30109A1C00ECE35D /* XCRemoteSwiftPackageReference "supabase-swift" */;
 			productName = PostgREST;
 		};
-		EF7DC4ED2FBB11FC0094C951 /* Realtime */ = {
+		EF08900430109A1C00ECE35D /* Realtime */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = EF7DC4E12FBB0D950094C951 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			package = EF088FFD30109A1C00ECE35D /* XCRemoteSwiftPackageReference "supabase-swift" */;
 			productName = Realtime;
 		};
-		EF7DC4EF2FBB11FC0094C951 /* Storage */ = {
+		EF08900630109A1C00ECE35D /* Storage */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = EF7DC4E12FBB0D950094C951 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			package = EF088FFD30109A1C00ECE35D /* XCRemoteSwiftPackageReference "supabase-swift" */;
 			productName = Storage;
 		};
-		EF7DC4F12FBB11FC0094C951 /* Supabase */ = {
+		EF08900830109A1C00ECE35D /* Supabase */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = EF7DC4E12FBB0D950094C951 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			package = EF088FFD30109A1C00ECE35D /* XCRemoteSwiftPackageReference "supabase-swift" */;
 			productName = Supabase;
 		};
 /* End XCSwiftPackageProductDependency section */
